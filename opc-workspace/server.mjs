@@ -137,7 +137,7 @@ export async function createApplication(options={}){
    if(req.method==='GET'&&Object.hasOwn(MOBILE_ICONS,path)){
     res.writeHead(200,{'content-type':'image/png'});return res.end(iconBuffers.get(MOBILE_ICONS[path]));
    }
-   if(path==='/health'&&req.method==='GET'){await pool.query('SELECT 1');return json(res,200,{status:'ok',version:'0.4.1'});}
+   if(path==='/health'&&req.method==='GET'){await pool.query('SELECT 1');return json(res,200,{status:'ok',version:'0.4.2'});}
    if(req.method==='POST'||req.method==='PUT')checkOrigin(req);
    if(path==='/api/login'&&req.method==='POST'){
     const body=await readJSON(req),key=req.socket.remoteAddress||'unknown',now=Date.now();let a=attempts.get(key);

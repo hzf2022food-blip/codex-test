@@ -982,7 +982,7 @@ shell=function(){
  if(header){header.innerHTML='<span id="cloud-status" role="status">云端已连接</span><button class="btn" id="cloud-refresh">同步</button><button class="btn" id="cloud-signout">退出</button>';
  document.getElementById("cloud-refresh").onclick=()=>cloudRefresh(true);
  document.getElementById("cloud-signout").onclick=async()=>{if(window.OPC_CLOUD_BUSY)return;try{const r=await fetch("/api/logout",{method:"POST",headers:{"content-type":"application/json"},body:"{}"});if(!r.ok)throw Error("退出失败");location.href="/login";}catch(e){showToast(e.message);}};}
- const footer=document.querySelector("footer");if(footer)footer.innerHTML='OPC CLOUD · v0.4.1 <span>登录后云端保存 · 另一设备更新可点击同步</span>';
+ const footer=document.querySelector("footer");if(footer)footer.innerHTML='OPC CLOUD · v0.4.2 <span>登录后云端保存 · 另一设备更新可点击同步</span>';
 };
 
 new MutationObserver(()=>{
