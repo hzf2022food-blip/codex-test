@@ -12,7 +12,7 @@ Render：New → Postgres，选择Singapore与**Free**，命名 opc-db。创建�
 | 字段 | 值 |
 |---|---|
 | Repository | hzf2022food-blip/codex-test |
-| Branch | codex/opc-cloud |
+| Branch | main |
 | Language | Node |
 | Root Directory | opc-workspace |
 | Build Command | npm install --omit=dev --no-audit --no-fund |
@@ -21,7 +21,7 @@ Render：New → Postgres，选择Singapore与**Free**，命名 opc-db。创建�
 | Region | Singapore |
 | Health Check Path | /health |
 
-不使用Rust或Cargo命令。main分支原样保留。
+使用Node与npm命令。程序已同步到main；开发分支codex/opc-cloud仍保留。
 
 ## 3. 环境变量（直接在Render填写）
 
