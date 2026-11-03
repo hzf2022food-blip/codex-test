@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: opc-workspace
+    runtime: node
+    plan: free
+    region: singapore
+    rootDir: opc-workspace
+    buildCommand: npm install --omit=dev --no-audit --no-fund
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_SSL
+        value: render-internal
+      - key: ADMIN_LOGIN
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false

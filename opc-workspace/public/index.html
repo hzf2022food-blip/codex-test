@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173436">
+<meta name="description" content="OPC一人公司统一工作台，本地试用版。">
+<title>OPC工作台 · 全流程本地业务版</title>
+<style>
+
+
+
+
+
+
+
+
+:root{--bg:#f5f7f9;--ink:#1c333b;--muted:#72838c;--line:#e4ebed;--green:#157a65;--sidebar:#173436}*{box-sizing:border-box}body{margin:0;font:14px/1.6 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--bg)}a{text-decoration:none;color:inherit}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #78bba7;outline-offset:3px}.skip{position:fixed;top:-100px;left:20px;padding:12px;background:white;z-index:100}.skip:focus{top:10px}aside{position:fixed;inset:0 auto 0 0;width:235px;background:var(--sidebar);color:#bbcecc;display:flex;flex-direction:column;z-index:30}.brand{display:flex;align-items:center;gap:12px;color:white;margin:27px 24px 30px;font-size:25px;font-weight:700;letter-spacing:2px}.brandmark{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;border:1px solid #6a9c91;background:#2a4c49;color:#b2e6cc}.brand small{display:block;font-size:10px;letter-spacing:2px;font-weight:400;color:#aac7c1}.nav-label{font-size:10px;letter-spacing:2px;color:#87a6a0;margin:0 24px 10px}nav{overflow:auto;flex:1;padding:0 12px}.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;margin:3px 0;font-size:12px}.nav-item:hover,.nav-item.active{background:#2c514b;color:white}.nav-item small{margin-left:auto;font-size:10px;opacity:.55}.nav-icon{width:22px;text-align:center;filter:saturate(.55)}.side-bottom{border-top:1px solid #31504c;padding:14px 12px 19px}.owner{display:flex;align-items:center;gap:10px;font-size:11px;padding:14px 12px 0}.owner small{display:block;color:#8faea7;font-size:9px}.avatar{display:grid;place-items:center;width:31px;height:31px;background:#d7eae0;border-radius:50%;color:#2b6652;font-weight:600;border:0}.workspace{margin-left:235px}.topbar{height:70px;background:white;border-bottom:1px solid var(--line);padding:0 34px;display:flex;align-items:center;justify-content:space-between}.breadcrumb{font-size:11px;color:var(--muted)}.breadcrumb span{margin:0 12px;color:#b2c0c3}.top-right{display:flex;align-items:center;gap:10px;font-size:10px;color:var(--muted)}.dot{display:inline-block;background:#bd9758;width:6px;height:6px;border-radius:50%}.top-right .avatar{margin-left:12px}main{max-width:1650px;margin:auto;padding:30px 34px 20px;outline:none}.page-top{display:flex;align-items:center;justify-content:space-between;gap:15px}.eyebrow{font-size:9px;letter-spacing:2px;color:var(--green);margin:0 0 6px;font-weight:600}h1{font-size:29px;font-weight:650;letter-spacing:-1px;margin:0}h2{font-size:16px;margin:0;font-weight:650}h3{font-size:15px;margin:0;font-weight:650}p{margin:0}.subtitle{font-size:12px;color:var(--muted);margin-top:7px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #dbe5e1;background:white;padding:9px 14px;border-radius:7px;font-size:11px;font-weight:550;white-space:nowrap}.btn:hover{background:#edf4ef}.btn.primary{background:var(--green);color:white;border-color:var(--green)}.business-row{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}.chip{border:1px solid transparent;background:transparent;padding:7px 13px;border-radius:7px;color:var(--muted);font-size:12px}.chip:hover{background:#edf3ef}.chip.selected{background:white;color:#1c735a;border-color:#d9e7df;box-shadow:0 2px 5px #193f2510;font-weight:600}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}.metric{padding:19px 21px;background:white;border:1px solid var(--line);border-radius:11px}.metric-label{font-size:11px;color:var(--muted)}.metric-value{font-size:31px;font-weight:650;letter-spacing:-1px;margin:6px 0}.metric-value small{font-size:10px;font-weight:400;color:var(--muted);letter-spacing:0}.metric p{font-size:10px;color:var(--muted)}.metric.budget{background:#eaf3ed;border-color:#dce9df}.panel{padding:22px;background:white;border:1px solid var(--line);border-radius:11px;margin-bottom:22px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:14px}.section-title h2{display:flex;align-items:center;gap:9px}.section-title h2:before{content:"";width:3px;height:15px;background:var(--green);border-radius:3px}.muted{font-size:11px;color:var(--muted)}.flow{display:flex;align-items:center;gap:10px;overflow:auto;padding-top:18px;padding-bottom:3px}.flow a{white-space:nowrap;background:#f3f7f4;border:1px solid #e1eae3;border-radius:6px;padding:6px 12px;font-size:11px}.flow a:hover{background:#e3eee6}.flow>span{color:#acbcb1}.search{display:flex;gap:7px;align-items:center;border:1px solid var(--line);background:white;padding:7px 11px;border-radius:7px;color:#84968e}.search input{border:0;background:transparent;width:180px;font-size:11px;color:var(--ink);min-width:0}.filters{display:flex;gap:5px;margin:15px 0}.filter{border:0;background:transparent;color:var(--muted);font-size:11px;border-radius:6px;padding:5px 12px}.filter.selected{background:#e4eee7;color:#206c54}.module-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{padding:20px 20px 13px;border:1px solid var(--line);border-radius:11px;background:white;display:block;transition:transform .15s,border-color .15s,box-shadow .15s}.card:hover{border-color:#a6ccba;transform:translateY(-3px);box-shadow:0 7px 20px #1b3d2610}.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.module-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:10px;background:#eaf3ed;font-size:22px}.module-icon.growth{background:#f0edf8}.module-icon.delivery{background:#eaf1f8}.module-icon.manage{background:#f7f1e7}.code{font:11px ui-monospace,monospace;color:#a3b2b7}.card p{font-size:11px;color:var(--muted);margin-top:5px;min-height:18px}.card-bottom{border-top:1px solid #f0f3f3;display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:11px;color:#9eafa7}.status{font-size:10px;color:#8d9e96}.status:before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#bcc8c1;margin-right:6px}.card.priority .status{color:#388469}.card.priority .status:before{background:#6aac8e}.next{display:flex;align-items:center;gap:18px;margin-top:24px;border:1px solid #dae8de;border-radius:11px;padding:22px;background:#eff5f0}.next .module-icon{background:white;flex-shrink:0}.next p{color:var(--muted);font-size:11px;margin-top:5px}.next>.btn{margin-left:auto}.next .eyebrow{font-size:8px}footer{margin-top:30px;padding-top:17px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;color:#8fa098;font-size:9px;letter-spacing:1px}footer span{letter-spacing:0;text-align:right}.hero{display:flex;align-items:center;gap:18px;padding:26px;border:1px solid #dce8df;border-radius:11px;background:#ecf4ee;margin-bottom:22px}.hero .module-icon{width:54px;height:54px;background:white;flex-shrink:0;font-size:28px}.hero h2{font-size:19px}.hero p{font-size:12px;color:var(--muted);margin-top:8px}.hero>.btn{margin-left:auto}.detail-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}.resources{display:grid;gap:10px;margin-top:18px}.resource{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);padding:12px 14px;border-radius:7px;font-size:12px}.resource:hover{background:#f0f6f1;border-color:#b2d3be}.resource span{color:#91a99a}.panel>.muted{margin-top:13px}.steps{list-style:none;counter-reset:step;padding:0;margin:20px 0}.steps li{counter-increment:step;display:flex;gap:12px;align-items:flex-start;margin-bottom:18px;font-size:12px}.steps li:before{content:counter(step,decimal-leading-zero);display:grid;place-items:center;min-width:25px;height:25px;border-radius:6px;background:#edf4ef;color:#4c886c;font-size:10px}.boundary p{color:var(--muted);font-size:12px;margin:10px 0 16px}.pill{display:inline-block;font-size:10px;border-radius:5px;padding:4px 8px;background:#f0f3f4;color:#7d9187}.connection{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}.connection:last-child{border:0}.connection strong{font-size:13px}.connection p{font-size:11px;color:var(--muted);margin-top:6px}.connection>.pill{white-space:nowrap}.icon-btn{display:grid;place-items:center;width:31px;height:31px;border:0;border-radius:6px;background:transparent;font-size:20px}.icon-btn:hover{background:#e4eee7}.menu{display:none}.backdrop{display:none}.empty{grid-column:1/-1;background:white;border:1px dashed #b7ccbe;padding:40px;text-align:center;border-radius:11px}.empty p{margin:10px 0 20px;color:var(--muted)}dialog{border:1px solid #d2e1d7;padding:24px;border-radius:14px;width:calc(100% - 32px);max-width:520px;box-shadow:0 20px 70px #12392333;color:var(--ink)}dialog::backdrop{background:#16362e77}.dialog-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:20px}#dialog-body h2{margin-bottom:14px}.notice{background:#f8f2e5;color:#8b7139;padding:12px;border-radius:7px;margin-top:20px;font-size:12px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}@media(min-width:1600px){.module-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:1150px){aside{width:210px}.workspace{margin-left:210px}main{padding:25px 23px}.topbar{padding:0 23px}.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{flex-wrap:wrap}.hero>.btn{margin-left:72px}.metric{padding:16px}.metric-value{font-size:27px}}@media(max-width:800px){aside{width:235px;transform:translateX(-100%);transition:transform .2s}.workspace{margin-left:0}.menu{display:grid;margin-right:10px}.topbar{height:60px;justify-content:flex-start}.top-right{margin-left:auto}.menu-open aside{transform:translateX(0)}.menu-open .backdrop{display:block;position:fixed;inset:0;background:#16352e66;z-index:20}.metrics{gap:10px}.metric-value{font-size:25px}.detail-grid{grid-template-columns:1fr}.flow-label{display:none}.next{flex-wrap:wrap}.next>.btn{margin-left:58px}.next>div{flex:1}.next .module-icon{flex:0 0 40px}.connection{align-items:flex-start;flex-direction:column;gap:10px}footer{flex-direction:column;gap:5px}footer span{text-align:left}}@media(max-width:480px){main{padding:22px 16px}.topbar{padding:0 16px}.breadcrumb{font-size:10px}.top-right .avatar{margin-left:0}.top-right{font-size:9px}.page-top{align-items:flex-start;flex-direction:column;gap:12px}h1{font-size:26px}.business-row{gap:2px;margin:20px 0}.chip{padding:6px 9px;font-size:11px}.metrics{grid-template-columns:1fr 1fr}.budget{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;align-items:center}.budget .metric-value{grid-column:2;grid-row:1/3;text-align:right}.metric p{font-size:9px}.section-title{flex-wrap:wrap}.search{width:100%}.search input{width:100%}.module-grid{gap:10px}.card{padding:15px 13px 10px}.card h3{font-size:13px}.card p{font-size:10px;min-height:32px}.module-icon{width:34px;height:34px;font-size:20px}.card-top{margin-bottom:12px}.card-bottom{margin-top:12px}.status{font-size:9px}.next{padding:18px;gap:12px}.next h3{font-size:13px}.next>.btn{margin-left:0;width:100%}.hero{padding:20px;gap:12px}.hero>div{flex:1;min-width:180px}.hero .module-icon{width:40px;height:40px;font-size:23px}.hero h2{font-size:17px}.hero>.btn{margin-left:0}.panel{padding:20px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+
+
+
+
+
+
+
+
+
+
+
+.supply-banner{background:#eef5ef;border:1px solid #dbe9df;border-radius:9px;padding:12px 15px;font-size:11px;color:#4e7862;margin-bottom:17px}.supply-banner.error{background:#fff0ee;border-color:#efc8c1;color:#a23e31}.supply-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 17px}.supply-tabs button{border:1px solid transparent;background:transparent;padding:8px 15px;color:var(--muted);font-size:12px;border-radius:7px}.supply-tabs button.selected{background:white;border-color:#d9e6dd;color:var(--green);font-weight:650}.supply-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:18px}.supply-toolbar .search{flex:1;min-width:200px}.supply-toolbar .search input{width:100%}.supply-toolbar select{border:1px solid var(--line);border-radius:7px;padding:8px 9px;background:white;font-size:11px;color:var(--ink)}.supply-counts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.supply-count{background:white;border:1px solid var(--line);border-radius:9px;padding:14px 17px}.supply-count strong{font-size:24px;margin-right:8px;font-weight:650}.supply-count span{font-size:11px;color:var(--muted)}.table-scroll{overflow:auto;border:1px solid var(--line);background:white;border-radius:10px}.supply-table{border-collapse:collapse;width:100%;min-width:720px;font-size:11px}.supply-table th{text-align:left;font-weight:600;background:#f4f7f5;color:#768b7d;padding:13px 14px;white-space:nowrap}.supply-table td{padding:14px;border-top:1px solid #edf2ee;vertical-align:top}.supply-table tbody tr:hover{background:#fafcfa}.supply-table .record-name{font-size:12px;font-weight:600;color:#296e52}.record-id{display:block;font-size:9px;font-family:ui-monospace,monospace;color:#99aaa0;margin-top:3px;max-width:250px;overflow-wrap:anywhere}.text-btn{border:0;background:transparent;color:var(--green);font-size:11px;padding:2px 5px}.text-btn:hover{text-decoration:underline}.subtle{color:var(--muted);font-size:10px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-field{display:flex;flex-direction:column;gap:5px}.form-field.full{grid-column:1/-1}.form-field label{font-size:11px;color:#627d6b}.form-field input,.form-field select,.form-field textarea{width:100%;padding:9px 10px;background:#fff;border:1px solid #dce6df;border-radius:6px;font-size:12px;color:var(--ink)}.form-field textarea{min-height:76px;resize:vertical}.form-help{color:var(--muted);font-size:10px;margin-bottom:18px}.form-actions{display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--line);padding-top:17px;margin-top:20px}.form-error{color:#a83c31;background:#fff0ee;padding:10px 12px;border-radius:6px;margin:12px 0;font-size:12px}.form-error:empty{display:none}.supply-dialog{max-width:780px}.detail-meta{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0}.detail-meta>div{border-bottom:1px solid #eef2ee;padding-bottom:10px;min-width:0;overflow-wrap:anywhere}.detail-meta dt{font-size:10px;color:var(--muted);margin-bottom:5px}.detail-meta dd{margin:0;font-size:12px;white-space:pre-wrap}.detail-meta .full{grid-column:1/-1}.detail-meta a{color:var(--green);text-decoration:underline;overflow-wrap:anywhere}.detail-links{margin-top:18px}.detail-link{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:11px}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:100;max-width:calc(100% - 30px);padding:12px 20px;border-radius:9px;background:#214c3a;color:white;box-shadow:0 6px 30px #1c392833;font-size:12px}.backup-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.backup-grid p{margin:10px 0 17px;font-size:12px;color:var(--muted)}.danger-btn{color:#a05545}.audit-info{font-size:10px;color:var(--muted);max-width:270px;overflow-wrap:anywhere}.supply-table td.empty-cell{text-align:center;padding:40px}.supplier-onboarding{max-width:460px;margin:auto;text-align:center;padding:16px}.supplier-onboarding .module-icon{margin:0 auto 12px}.supplier-onboarding h3{font-size:16px}.supplier-onboarding p{margin:10px 0 20px;line-height:1.9;color:var(--muted);font-size:12px}button:disabled{opacity:.5;cursor:not-allowed}.local-note{font-size:10px;color:var(--muted);margin-top:14px}.export-footer{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-top:12px;font-size:10px;color:var(--muted)}.tag-ok{background:#e6f2e9;color:#2f7a4d}.tag-archive{background:#f0f1f1;color:#919a94}@media(max-width:600px){.form-grid,.detail-meta,.backup-grid{grid-template-columns:1fr}.form-field.full,.detail-meta .full{grid-column:auto}.supply-count{padding:12px}.supply-count strong{display:block;font-size:23px}.supply-count span{font-size:10px}.supply-tabs button{padding:7px 10px;font-size:11px}.supply-toolbar .search{flex-basis:100%;min-width:0}.supply-toolbar .btn{flex:1}.export-footer{align-items:flex-start;flex-direction:column}dialog.supply-dialog{padding:18px}}
+
+
+
+
+
+
+.ops-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}.ops-tab{border:1px solid transparent;background:transparent;padding:8px 13px;color:var(--muted);font-size:11px;border-radius:7px}.ops-tab.selected{background:white;color:var(--green);border-color:#d9e8de;font-weight:600}.ops-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.ops-tools .search{flex:1;min-width:200px}.ops-tools input{width:100%}.ops-tools select{background:white;border:1px solid var(--line);border-radius:7px;padding:8px;color:var(--ink);font-size:11px}.ops-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 19px}.ops-summary article{background:white;border:1px solid var(--line);border-radius:10px;padding:17px}.ops-summary strong{display:block;font-size:26px;font-weight:650}.ops-summary small{font-size:10px;color:var(--muted)}.ops-table{min-width:900px}.ops-table td{max-width:280px;overflow-wrap:anywhere}.ops-num{font-variant-numeric:tabular-nums;white-space:nowrap}.ops-action-group{display:flex;gap:4px;flex-wrap:wrap;min-width:160px}.ops-links{display:flex;gap:7px;flex-wrap:wrap;margin-top:17px}.ops-form .form-grid{gap:12px}.ops-readonly{background:#f2f5f3!important;color:var(--muted)!important}.ops-hint{font-size:10px;color:var(--muted);margin:8px 0 15px}.ops-intro{padding:12px 15px;border:1px solid #dce9df;background:#eef5f0;color:#507b62;border-radius:8px;font-size:11px;margin-bottom:18px}.ops-list-empty{padding:35px;text-align:center;background:white;border:1px dashed #c2d7c9;border-radius:10px}.ops-list-empty p{margin:10px 0 20px;color:var(--muted);font-size:12px}.ops-table tfoot td{background:#f3f7f4;font-weight:600}.ops-badge-warning{color:#a16c35;background:#faf1e5}.ops-stage{display:inline-flex;gap:5px;align-items:center;font-size:10px;border:1px solid #e0e9e3;padding:4px 7px;border-radius:6px;margin:4px 3px 0 0}.ops-digest{white-space:pre-wrap;font-family:inherit;font-size:12px;line-height:1.9;overflow-wrap:anywhere}.ops-control-panel .resources{grid-template-columns:1fr 1fr}.ops-graph{display:grid;gap:12px}.ops-progress{display:grid;grid-template-columns:110px 1fr 70px;gap:12px;align-items:center;font-size:12px}.ops-progress progress{width:100%;height:12px;accent-color:var(--green)}.ops-line-total{grid-column:1/-1;padding:10px;background:#eff5f0;font-size:12px;border-radius:7px;color:var(--green)}@media(max-width:600px){.ops-summary{grid-template-columns:1fr 1fr}.ops-summary article:last-child{grid-column:1/-1}.ops-tabs{gap:3px}.ops-tab{font-size:10px;padding:7px 9px}.ops-tools .search{flex-basis:100%;min-width:0}.ops-control-panel .resources{grid-template-columns:1fr}.ops-progress{grid-template-columns:90px 1fr 50px;gap:7px;font-size:11px}}
+
+
+
+@media(pointer:coarse){button,.btn,.chip,.text-btn,.nav-item{min-height:44px}.form-field input,.form-field select,.form-field textarea{font-size:16px;min-height:44px}.top-right{gap:4px}.top-right .btn{padding:5px 7px;font-size:11px}}
+#cloud-status{font-size:10px;color:#427a62;max-width:145px}
+@media(max-width:480px){.topbar{padding:0 10px}.breadcrumb{max-width:110px;overflow:hidden;white-space:nowrap}.top-right{margin-left:auto}#cloud-status{max-width:86px;font-size:9px}.top-right .btn{font-size:10px;padding:4px 6px}}
+
+
+@media(max-width:650px){
+ .table-scroll{overflow:visible;border:none;background:transparent}
+ table.supply-table{display:block;min-width:0;width:100%}
+ .supply-table thead{display:none}.supply-table tbody{display:grid;gap:12px}
+ .supply-table tr{display:grid;grid-template-columns:1fr 1fr;border:1px solid #dce7df;border-radius:10px;background:white;padding:8px}
+ .supply-table td{display:block;border:0;max-width:none;padding:9px;min-width:0;overflow-wrap:anywhere}
+ .supply-table td::before{content:attr(data-label);display:block;color:#84968a;font-size:10px;margin-bottom:5px}
+ .supply-table td:first-child,.supply-table td:last-child{grid-column:1/-1}
+ .supply-table .record-id{font-size:10px;max-width:none}.ops-action-group{min-width:0}.ops-action-group button{flex:1}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript>请启用JavaScript使用工作台。现有资料可在Google云盘OPC工作台中查看。</noscript>
+<script>
+/*OPC_CLOUD_BOOTSTRAP*/
+
+
+
+function createWorkspaceStorage(nativeStorage){
+ const KEY="opc.workspace.v1",SUP="opc.supply.v1",OPS="opc.operations.v1";
+ function read(){
+  const raw=nativeStorage.getItem(KEY);
+  if(raw){const e=JSON.parse(raw);if(!e||e.version!==1||!["string","object"].includes(typeof e.supplyRaw)||!["string","object"].includes(typeof e.opsRaw)||(typeof e.supplyRaw==="object"&&e.supplyRaw!==null)||(typeof e.opsRaw==="object"&&e.opsRaw!==null))throw Error("统一档案格式异常，请先备份原始浏览器数据");return e;}
+  return {version:1,supplyRaw:nativeStorage.getItem(SUP),opsRaw:nativeStorage.getItem(OPS)};
+ }
+ return {
+  getItem:function(k){if(k===SUP||k===OPS){const e=read();return k===SUP?e.supplyRaw:e.opsRaw;}return nativeStorage.getItem(k);},
+  setItem:function(k,v){if(k===SUP||k===OPS){const e=read();e[k===SUP?"supplyRaw":"opsRaw"]=String(v);nativeStorage.setItem(KEY,JSON.stringify(e));}else nativeStorage.setItem(k,v);},
+  removeItem:function(k){if(k===SUP||k===OPS){const e=read();e[k===SUP?"supplyRaw":"opsRaw"]=null;nativeStorage.setItem(KEY,JSON.stringify(e));}else nativeStorage.removeItem(k);},
+  commitBoth:function(supplyRevision,opsRevision,supply,ops){const e=read(),s=e.supplyRaw?JSON.parse(e.supplyRaw):{revision:0},o=e.opsRaw?JSON.parse(e.opsRaw):{revision:0};if(s.revision!==supplyRevision||o.revision!==opsRevision)throw Error("另一窗口已更新档案，请刷新后重试");nativeStorage.setItem(KEY,JSON.stringify({version:1,supplyRaw:JSON.stringify(supply),opsRaw:JSON.stringify(ops)}));},
+  rawBackup:function(){return nativeStorage.getItem(KEY)||JSON.stringify(read());}
+ };
+}
+function availableWorkspaceStorage(){
+ try{return createWorkspaceStorage(window.localStorage);}catch(e){const failure=function(){throw Error("浏览器未允许本地存储："+e.message);};return {getItem:failure,setItem:failure,removeItem:failure,commitBoth:failure,rawBackup:failure};}
+}
+const workspaceStorage=availableWorkspaceStorage();
+
+
+
+
+"use strict";
+const CONFIG={"workbook":"","businesses":[["all","全部业务"],["BUS-001","3D打印耗材"],["BUS-002","手工DIY"],["BUS-003","代采业务"],["BUS-004","袜子业务"]],"modules":[["A00","总控中心","目标、任务与经营节奏","🎯","管理",[[129,"任务清单"],[110,"业务档案"]]],["A01","供应商与工厂","供应链资源统一建档","🏭","供应链",[[131,"供应商查询"],[111,"供应商档案"],[112,"工厂档案"],[113,"供应商与工厂关系"],[116,"供货关系"]]],["A02","产品与规格","一份产品档案，多渠道复用","📦","供应链",[[114,"产品档案"],[115,"SKU规格"],[127,"产品资料"]]],["A03","采购与补货","从需求到到货有据可查","🛒","供应链",[[118,"采购明细"],[116,"供货关系"]]],["A04","库存与出入库","每次收发都能追溯来源","🏬","履约",[[121,"库存查询"],[120,"出入库流水"],[119,"仓库档案"]]],["A05","内容与发布","素材、制作、发布与效果","🎬","增长",[[128,"内容发布"],[127,"素材库"]]],["A06","店铺与渠道","淘宝、Shopify与独立站","🏪","增长",[[110,"渠道与业务"],[115,"产品规格"],[129,"店铺任务"]]],["A07","客户与销售","询盘、报价、跟进与成交","🤝","增长",[[122,"客户档案"],[123,"询盘跟进"],[133,"对客报价"],[117,"销售参考价"]]],["A08","订单与交付","备货、发货和交付进度","🚚","履约",[[124,"销售明细"],[120,"出入库流水"]]],["A09","售后与复购","问题处理与持续客户服务","🛠️","履约",[[125,"售后工单"],[124,"原订单"],[122,"客户档案"]]],["A10","财务与资金","分业务记录收支与成本","💰","管理",[[126,"收支流水"],[110,"业务档案"]]],["A11","经营复盘","让每周行动有明确依据","📊","管理",[[134,"经营指标"],[129,"复盘行动"],[102,"建设里程碑"]]]],"steps":[["确认当前目标与优先级","分派各板块任务","汇总进展与异常"],["登记供应商和实际工厂","核实资料并建立主体关系","关联产品及供货条件"],["建立产品与型号","拆分颜色、尺寸等SKU规格","核实参数与资料来源"],["匹配供应商并核实成本","建立采购明细及交期","收货后关联入库"],["选择SKU、仓库及关联单据","登记数量、单位和批次","审核流水并核对实物"],["调取核实后的产品资料","制作剪辑方案、封面和文案","完成发布并记录效果"],["确认渠道和主推商品","检查上架资料与购买路径","记录修改及效果"],["客户建档并确认需求","核实报价、付款、运费与交期","跟进并转为订单"],["核对订单和收款","备货、出库并记录物流","跟踪交付及异常"],["关联原订单并记录问题","处理退货、退款或使用服务","安排补货与客户跟进"],["记录真实发生的原币收支","关联单据并核实汇率","对账并汇总资金变化"],["读取同周期同口径指标","比较目标并定位异常","生成下一阶段行动"]]};
+
+
+
+
+
+
+
+
+function safeBusiness(v){return CONFIG.businesses.some(function(b){return b[0]===v})?v:"all";}
+function readRoute(hash){
+ const parts=String(hash||"").replace(/^#/,"").split("?");
+ const id=parts[0]||"home";
+ let business="all";
+ (parts[1]||"").split("&").forEach(function(pair){const p=pair.split("=");if(p[0]==="business"){try{business=decodeURIComponent(p[1]||"");}catch(e){business="all";}}});
+ return {page:id==="home"||id==="system"||CONFIG.modules.some(function(m){return m[0]===id})?id:"home",business:safeBusiness(business)};
+}
+function makeRoute(p,b){return "#"+p+"?business="+encodeURIComponent(safeBusiness(b));}
+function searchModules(q){q=String(q||"").trim().toLowerCase();return CONFIG.modules.filter(function(m){return [m[0],m[1],m[2],m[4]].join(" ").toLowerCase().includes(q);});}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function esc(v){return String(v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]});}
+let state=readRoute(location.hash),query="",category="全部";
+if(!location.hash){try{state.business=safeBusiness(workspaceStorage.getItem("opc.business"));}catch(e){}history.replaceState(null,"",makeRoute("home",state.business));}
+const app=document.getElementById("app");
+function navlink(page,label,cls){return '<a class="'+(cls||"")+'" href="'+makeRoute(page,state.business)+'">'+label+'</a>';}
+function db(gid,label){return '<a class="resource" href="'+CONFIG.workbook+'#gid='+gid+'" target="_blank" rel="noopener noreferrer">'+esc(label)+'<span aria-hidden="true">↗</span></a>';}
+function current(){return CONFIG.modules.find(function(m){return m[0]===state.page;});}
+function title(){return state.page==="home"?"我的经营工作台":state.page==="system"?"连接与设置":current()[1];}
+function shell(){
+ app.innerHTML='<a class="skip" href="#main">跳到主要内容</a><aside aria-label="工作板块导航"><a class="brand" href="'+makeRoute("home",state.business)+'"><span class="brandmark">O</span><span>OPC<small>一人公司工作台</small></span></a><div class="nav-label">工作空间</div><nav>'+navlink("home",'<span class="nav-icon" aria-hidden="true">▦</span>工作台总览',"nav-item "+(state.page==="home"?"active":""))+CONFIG.modules.map(function(m){return navlink(m[0],'<span class="nav-icon" aria-hidden="true">'+m[3]+'</span><span>'+m[1]+'</span><small>'+m[0]+'</small>',"nav-item "+(state.page===m[0]?"active":""));}).join("")+'</nav><div class="side-bottom">'+navlink("system",'<span class="nav-icon" aria-hidden="true">⚙</span>连接与设置',"nav-item "+(state.page==="system"?"active":""))+'<div class="owner"><span class="avatar">我</span><div>我的一人公司<small>统一框架 · v0.4.0</small></div></div></div></aside><div class="backdrop" id="backdrop"></div><div class="workspace"><header class="topbar"><button class="menu icon-btn" id="menu" aria-label="展开导航" aria-expanded="false">☰</button><div class="breadcrumb">我的工作空间<span>/</span>'+esc(title())+'</div><div class="top-right"><i class="dot"></i>本地试用<button class="avatar" id="about" aria-label="查看版本说明">我</button></div></header><main id="main" tabindex="-1"><div class="page-top"><div><p class="eyebrow">ONE PERSON COMPANY</p><h1>'+esc(title())+'</h1><p class="subtitle">'+(state.page==="home"?"四项业务，一个入口。让资料、任务和经营流程连起来。":state.page==="system"?"查看连接状态与后续建设范围。":state.page+" · 当前业务："+esc(CONFIG.businesses.find(function(b){return b[0]===state.business})[1]))+'</p></div><a class="btn" href="'+CONFIG.workbook+'#gid=100" target="_blank" rel="noopener noreferrer">打开数据工作台 ↗</a></div><div class="business-row" role="group" aria-label="切换业务">'+CONFIG.businesses.map(function(b){return '<button class="chip '+(b[0]===state.business?"selected":"")+'" data-business="'+b[0]+'" aria-pressed="'+(b[0]===state.business)+'">'+esc(b[1])+'</button>';}).join("")+'</div><div id="page"></div><footer>OPC WORKSPACE<span>本地试用 · 云端登录、数据同步与Agent执行待接入</span></footer></main></div><dialog id="dialog"><div class="dialog-head"><strong>板块助理</strong><button class="icon-btn" id="close-dialog" aria-label="关闭">×</button></div><div id="dialog-body"></div></dialog>';
+ document.getElementById("menu").onclick=function(){this.setAttribute("aria-expanded",String(document.body.classList.toggle("menu-open")));};
+ document.getElementById("backdrop").onclick=function(){document.body.classList.remove("menu-open");document.getElementById("menu").setAttribute("aria-expanded","false");};
+ document.querySelectorAll("[data-business]").forEach(function(el){el.onclick=function(){location.hash=makeRoute(state.page,el.dataset.business);};});
+ document.getElementById("about").onclick=function(){openDialog(null);};
+ document.getElementById("close-dialog").onclick=function(){document.getElementById("dialog").close();};
+ document.getElementById("dialog").onclick=function(e){if(e.target===this){const r=this.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)this.close();}};
+ if(state.page==="home")home();else if(state.page==="system")settings();else modulePage();
+ document.title=title()+" · OPC工作台";
+}
+function home(){
+ const scope=state.business==="all"||state.business==="BUS-001";
+ document.getElementById("page").innerHTML='<section class="metrics" aria-label="经营目标"><article class="metric"><div class="metric-label">淘宝 · 月订单目标</div><div class="metric-value">'+(scope?'待设置<small> 单／月</small>':"—")+'</div><p>'+(scope?"目标值 · 实际订单待接入":"当前业务目标待设置")+'</p></article><article class="metric"><div class="metric-label">Shopify · 月订单目标</div><div class="metric-value">'+(scope?'待设置<small> 单／月</small>':"—")+'</div><p>'+(scope?"3D打印耗材 · WhatsApp成交另计":"当前业务目标待设置")+'</p></article><article class="metric budget"><div class="metric-label">公司 · 新增业务预算</div><div class="metric-value">未设置</div><p>四项业务共用 · 非已到账余额</p></article></section><section class="panel"><div class="section-title"><h2>经营流程</h2><span class="muted flow-label">各板块通过统一编号关联</span></div><div class="flow">'+[["A01","供应链"],["A02","产品"],["A03","采购"],["A04","库存"],["A07","销售"],["A08","交付"],["A09","售后"],["A10","财务"]].map(function(item,i){return (i?'<span aria-hidden="true">›</span>':"")+navlink(item[0],item[1]);}).join("")+'</div></section><section aria-label="全部工作板块"><div class="section-title"><h2>全部工作板块 <small class="muted">12</small></h2><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索板块名称或编号" aria-label="搜索工作板块" maxlength="100" value="'+esc(query)+'"></label></div><div class="filters" role="group" aria-label="筛选工作板块">'+["全部","供应链","增长","履约","管理"].map(function(c){return '<button class="filter '+(category===c?"selected":"")+'" data-category="'+c+'" aria-pressed="'+(category===c)+'">'+c+'</button>';}).join("")+'</div><div class="module-grid" id="cards"></div><p class="sr-only" id="result-count" aria-live="polite"></p></section><section class="next"><span class="module-icon" aria-hidden="true">🏭</span><div><p class="eyebrow">NEXT WORKFLOW</p><h3>先把供应链档案跑通</h3><p>供应商 → 工厂 → 产品规格 → 供货关系，连接后续采购与库存。</p></div>'+navlink("A01","进入供应链 →","btn primary")+'</section>';
+ document.getElementById("search").oninput=function(e){query=e.target.value;cards();};
+ document.querySelectorAll("[data-category]").forEach(function(el){el.onclick=function(){category=el.dataset.category;home();document.querySelector('[data-category="'+category+'"]').focus();};});
+ cards();
+}
+function cards(){
+ const list=searchModules(query).filter(function(m){return category==="全部"||m[4]===category;});
+ document.getElementById("cards").innerHTML=list.length?list.map(function(m){return navlink(m[0],'<div class="card-top"><span class="module-icon '+(m[4]==="增长"?"growth":m[4]==="履约"?"delivery":m[4]==="管理"?"manage":"")+'" aria-hidden="true">'+m[3]+'</span><span class="code">'+m[0]+'</span></div><h3>'+m[1]+'</h3><p>'+m[2]+'</p><div class="card-bottom"><span class="status">'+(m[0]==="A01"?"优先建设":"待建设")+'</span><span aria-hidden="true">→</span></div>',"card "+(m[0]==="A01"?"priority":""));}).join(""):'<div class="empty"><h3>没有匹配的板块</h3><p>尝试输入“供应商”“库存”或“A01”。</p><button class="btn" id="reset-search">清除筛选</button></div>';
+ document.getElementById("result-count").textContent="找到"+list.length+"个板块";
+ const reset=document.getElementById("reset-search");if(reset)reset.onclick=function(){query="";category="全部";home();document.getElementById("search").focus();};
+}
+function steps(m){return '<ol class="steps">'+CONFIG.steps[CONFIG.modules.indexOf(m)].map(function(s){return '<li>'+esc(s)+'</li>';}).join("")+'</ol>';}
+function modulePage(){
+ const m=current();
+ document.getElementById("page").innerHTML='<section class="hero"><span class="module-icon" aria-hidden="true">'+m[3]+'</span><div><p class="eyebrow">'+m[0]+' / '+m[4]+'</p><h2>'+m[2]+'</h2><p>板块框架已配置，业务操作界面待建设。现有档案通过下方云盘入口使用。</p></div><button class="btn" id="role">✧ 查看助理职责</button></section><div class="detail-grid"><section class="panel"><div class="section-title"><h2>数据与档案入口</h2></div><p class="muted">新窗口打开Google表格，请在表内按业务ID筛选。当前网页不会自动读取或同步表内数据。</p><div class="resources">'+m[5].map(function(r){return db(r[0],r[1]);}).join("")+'</div></section><section class="panel"><div class="section-title"><h2>标准工作流</h2></div>'+steps(m)+'</section></div><section class="panel boundary"><h3>本板块的下一步</h3><p>'+(m[0]==="A01"?"建设供应商列表、搜索、新增表单、详情和编辑功能，再连接服务端数据库。供应商与工厂分别建档，通过关系记录关联。":"沿用统一业务编号、档案详情和操作记录，逐步接入对应的业务功能。")+'</p><span class="pill">状态：待接入业务操作与Agent</span></section>';
+ document.getElementById("role").onclick=function(){openDialog(m);};
+}
+function settings(){
+ const items=[
+["统一框架","图标导航、业务切换、板块搜索及移动端菜单。","源码已实现 · 浏览器待验收"],
+["Google云盘数据工作台","提供原数据库的外部链接；网页本身没有获取云盘读写授权。","仅外部入口"],
+["服务端数据库","供应商、工厂、产品与业务单据将通过统一服务保存。","待接入"],
+["账号与访问权限","正式上线需要登录及本人访问控制；当前版本使用独立工作台账号登录。","待接入"],
+["Agent与业务平台","执行工具、淘宝、Shopify、WhatsApp及发布接口尚未连接。","待接入"]
+];
+ document.getElementById("page").innerHTML='<section class="panel"><div class="section-title"><h2>连接状态</h2></div>'+items.map(function(i){return '<div class="connection"><div><strong>'+i[0]+'</strong><p>'+i[1]+'</p></div><span class="pill">'+i[2]+'</span></div>';}).join("")+'</section><section class="panel boundary"><h3>数据保存范围</h3><p>浏览器仅记住当前选择的业务视图，不保存供应商或客户资料。业务记录仍由原Google表格管理。</p><h3>资料依据</h3><p>已撤回的旧参数手册禁止使用。未知的参数、库存和交期保持待核实。</p><div class="resources">'+db(104,"操作与接口说明")+db(132,"Agent执行说明")+db(102,"交付里程碑")+'</div></section>';
+}
+function openDialog(m){
+ document.getElementById("dialog-body").innerHTML='<h2>'+esc(m?m[0]+" "+m[1]:"当前框架说明")+'</h2>'+(m?'<p>'+esc(m[2])+'</p>'+steps(m):'<p>本版本包含统一工作台和供应链本地档案。供应商、工厂及关系保存在当前账号的云端数据库，可导出备份；云盘与云端服务尚未同步。</p>')+'<div class="notice">Agent自动执行待接入。当前不会发送消息、创建订单或修改库存。</div>';
+ document.getElementById("dialog").showModal();
+}
+window.addEventListener("hashchange",function(){
+ if(location.hash==="#main"){document.getElementById("main").focus();return;}
+ state=readRoute(location.hash);
+ try{workspaceStorage.setItem("opc.business",state.business);}catch(e){}
+ document.body.classList.remove("menu-open");shell();document.getElementById("main").focus();window.scrollTo(0,0);
+});
+shell();
+
+
+
+
+
+
+
+
+
+
+
+
+const SUPPLY_KEY="opc.supply.v1";
+const SUPPLY_FIELDS={
+suppliers:["id","businessId","name","type","creditCode","country","address","contact","phone","messenger","email","website","products","currency","paymentTerms","status","verifiedAt","documents","notes","createdAt","updatedAt"],
+factories:["id","businessId","name","country","address","contact","phone","process","capacity","products","certificates","inspection","status","documents","notes","createdAt","updatedAt"],
+links:["id","supplierId","factoryId","type","status","proof","startDate","endDate","notes","createdAt","updatedAt"]
+};
+const BUSINESS_IDS=["BUS-001","BUS-002","BUS-003","BUS-004"];
+const PARTY_STATUSES=["待核实","可合作","暂停","归档"];
+const SUPPLIER_TYPES=["工厂直供","贸易商","代理商","服务商","待核实"];
+const LINK_STATUSES=["待核实","已核实","已终止"];
+function emptySupply(){return {schemaVersion:1,revision:0,suppliers:[],factories:[],links:[],logs:[]};}
+function normalizeName(v){return String(v||"").replace(/\s+/g,"").toLowerCase();}
+function cloneSupply(v){return JSON.parse(JSON.stringify(v));}
+function checkURL(v){if(!v)return true;try{const u=new URL(v);return (u.protocol==="https:"||u.protocol==="http:")&&!!u.hostname;}catch(e){return /^https?:\/\/[^\s/]+(?:[/?#][^\s]*)?$/.test(v);}}
+function validateSupply(input){
+ if(!input||input.schemaVersion!==1||!Number.isInteger(input.revision)||input.revision<0)throw Error("备份版本或修订号无效。");
+ const db=emptySupply();db.revision=input.revision;
+ ["suppliers","factories","links"].forEach(function(kind){
+  if(!Array.isArray(input[kind])||input[kind].length>10000)throw Error("档案格式错误或数量超过10000条。");
+  const ids=new Set();
+  db[kind]=input[kind].map(function(raw){
+   if(!raw||typeof raw!=="object")throw Error("档案格式错误。");
+   const out={};SUPPLY_FIELDS[kind].forEach(function(key){if(typeof raw[key]!=="string"&&raw[key]!==undefined)throw Error("字段必须为文本："+key);out[key]=String(raw[key]||"").trim();if(out[key].length>8000)throw Error("字段内容过长："+key);});
+   if(!/^(SUP|FAC|SFR)-[A-Za-z0-9_-]{3,80}$/.test(out.id)||!out.id.startsWith({suppliers:"SUP-",factories:"FAC-",links:"SFR-"}[kind])||ids.has(out.id))throw Error("档案编号缺失、重复或格式错误。");
+   ids.add(out.id);
+   if(kind!=="links"){
+    if(!out.name||!BUSINESS_IDS.includes(out.businessId)||!PARTY_STATUSES.includes(out.status))throw Error("名称、所属业务或合作状态无效。");
+    if(kind==="suppliers"&&!SUPPLIER_TYPES.includes(out.type))throw Error("供应商类型无效。");
+    if(out.website&&!checkURL(out.website))throw Error("官网地址需以http://或https://开头。");
+    if(out.documents&&out.documents.split(/\r?\n/).filter(Boolean).some(function(u){return !checkURL(u.trim());}))throw Error("资料链接请每行填写一个完整的http或https地址。");
+   }else if(!LINK_STATUSES.includes(out.status)||(out.proof&&!checkURL(out.proof)))throw Error("关系状态或证明链接无效。");
+   return out;
+  });
+  if(kind!=="links"){
+   const names=new Set(),credits=new Set();
+   db[kind].forEach(function(r){
+    const nameKey=r.businessId+"|"+normalizeName(r.name);
+    if(names.has(nameKey))throw Error("同一业务内存在同名档案："+r.name);
+    names.add(nameKey);
+    if(kind==="suppliers"&&r.creditCode){const key=r.businessId+"|"+normalizeName(r.creditCode);if(credits.has(key))throw Error("同一业务内信用代码重复。");credits.add(key);}
+   });
+  }
+ });
+ const pairs=new Set();
+ db.links.forEach(function(r){
+  const s=db.suppliers.find(function(x){return x.id===r.supplierId}),f=db.factories.find(function(x){return x.id===r.factoryId});
+  if(!s||!f)throw Error("供应商或工厂不存在，无法建立关系。");
+  if(s.businessId!==f.businessId)throw Error("供应商与工厂的所属业务不一致。");
+  const pair=r.supplierId+"|"+r.factoryId;if(pairs.has(pair))throw Error("供应商与工厂的关系已存在，请编辑原记录。");pairs.add(pair);
+ });
+ if(!Array.isArray(input.logs)||input.logs.length>50000)throw Error("操作日志格式无效或超过50000条。");
+ db.logs=input.logs.map(function(r){if(!r||typeof r!=="object")throw Error("日志格式错误。");const o={};["id","at","action","kind","entityId","detail"].forEach(function(k){o[k]=String(r[k]||"").slice(0,20000);});return o;});
+ return db;
+}
+function filterParties(db,kind,business,query,status){
+ const q=String(query||"").toLowerCase();
+ return db[kind].filter(function(r){return (business==="all"||r.businessId===business)&&(!status||r.status===status)&&(!q||[r.id,r.name,r.contact,r.phone,r.messenger,r.products,r.address].join(" ").toLowerCase().includes(q));});
+}
+function prepareSupplyChange(db,kind,record,now,idFactory){
+ if(!SUPPLY_FIELDS[kind])throw Error("未知档案类型。");
+ const next=cloneSupply(db),existing=record.id?next[kind].find(function(r){return r.id===record.id}):null;
+ if(record.id&&!existing)throw Error("档案不存在，请刷新页面。");
+ const result={};
+ SUPPLY_FIELDS[kind].forEach(function(key){result[key]=String(record[key]||"").trim();});
+ result.id=existing?existing.id:idFactory({suppliers:"SUP",factories:"FAC",links:"SFR"}[kind]);
+ result.createdAt=existing?existing.createdAt:now;result.updatedAt=now;
+ if(existing)next[kind][next[kind].indexOf(existing)]=result;else next[kind].push(result);
+ next.revision=db.revision+1;
+ next.logs.push({id:idFactory("LOG"),at:now,action:existing?"更新":"新增",kind:kind,entityId:result.id,detail:JSON.stringify({before:existing||null,after:result})});
+ return validateSupply(next);
+}
+function persistSupply(storage,db,next){
+ const current=storage.getItem(SUPPLY_KEY);
+ const currentRevision=current?validateSupply(JSON.parse(current)).revision:0;
+ if(currentRevision!==db.revision)throw Error("另一个窗口已更新档案，请先刷新页面再修改。");
+ storage.setItem(SUPPLY_KEY,JSON.stringify(next));
+ return next;
+}
+function csvValue(v){v=String(v||"");if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';}
+function supplyCSV(db,kind){
+ const heads={
+ suppliers:["供应商ID","供应商名称","类型","业务ID","统一社会信用代码","国家地区","地址","联系人","电话","微信或WhatsApp","邮箱","1688或官网","主营范围","结算币种","付款条件","合作状态","资料链接","资料核实日期","备注"],
+ factories:["工厂ID","工厂名称","业务ID","国家地区","生产地址","联系人","联系方式","工艺与设备","产能及单位","可生产范围","证书与有效期","验厂记录","资料链接","合作状态","更新日期","备注"],
+ links:["关系ID","供应商ID","工厂ID","关系类型","核实状态","证明链接","起始日期","终止日期","备注"]
+ };
+ const keys={
+ suppliers:["id","name","type","businessId","creditCode","country","address","contact","phone","messenger","email","website","products","currency","paymentTerms","status","documents","verifiedAt","notes"],
+ factories:["id","name","businessId","country","address","contact","phone","process","capacity","products","certificates","inspection","documents","status","updatedAt","notes"],
+ links:["id","supplierId","factoryId","type","status","proof","startDate","endDate","notes"]
+ };
+ return "\uFEFF"+[heads[kind],...db[kind].map(function(r){return keys[kind].map(function(k){return r[k]||"";});})].map(function(row){return row.map(csvValue).join(",");}).join("\r\n");
+}
+
+
+
+
+function prepareSupplyImport(db,incoming,now,idFactory){
+ incoming=validateSupply(incoming);
+ let added=0;const candidate=cloneSupply(db);
+ ["suppliers","factories","links"].forEach(function(kind){
+  incoming[kind].forEach(function(r){
+   const exists=candidate[kind].find(function(x){return x.id===r.id;});
+   if(exists){if(JSON.stringify(exists)!==JSON.stringify(r))throw Error("相同编号存在内容冲突："+r.id+"。本次未导入任何记录。");}
+   else{candidate[kind].push(r);added++;}
+  });
+ });
+ const known=new Set(candidate.logs.map(function(l){return l.id;}));
+ incoming.logs.forEach(function(l){if(!known.has(l.id)){candidate.logs.push(l);known.add(l.id);}});
+ candidate.revision=db.revision+1;
+ candidate.logs.push({id:idFactory("LOG"),at:now,action:"导入备份",kind:"system",entityId:"backup",detail:"新增档案 "+added+" 条；不覆盖已有编号。"});
+ return {data:validateSupply(candidate),added:added};
+}
+
+
+
+
+
+
+
+
+let supplyData=emptySupply(),supplyReadError="",rawSupply="";
+try{rawSupply=workspaceStorage.getItem(SUPPLY_KEY)||"";if(rawSupply)supplyData=validateSupply(JSON.parse(rawSupply));const probe="opc.probe."+Date.now();workspaceStorage.setItem(probe,"1");workspaceStorage.removeItem(probe);}catch(e){supplyReadError="当前无法读取或保存本地档案："+e.message;}
+let supplyTab="suppliers",supplyQuery="",supplyStatus="",toastTimer;
+function businessName(id){const b=CONFIG.businesses.find(function(x){return x[0]===id});return b?b[1]:id;}
+function supplyID(prefix){let suffix;if(globalThis.crypto&&typeof crypto.randomUUID==="function")suffix=crypto.randomUUID();else suffix=Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,12);return prefix+"-"+suffix;}
+function nowString(){return new Date().toISOString();}
+function displayTime(v){const d=new Date(v);return Number.isNaN(d.getTime())?v:d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})+'（北京时间）';}
+function showToast(message){let el=document.getElementById("supply-toast");if(!el){el=document.createElement("div");el.id="supply-toast";el.className="toast";el.setAttribute("role","status");document.body.appendChild(el);}el.textContent=message;clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.remove();},4200);}
+function cleanError(e){return e&&e.message?e.message:"操作未完成，请重试。";}
+async function saveRecord(kind,record){
+ if(supplyReadError)throw Error(supplyReadError);
+ const next=prepareSupplyChange(supplyData,kind,record,nowString(),supplyID);
+ supplyData=await cloudPersistSupply(workspaceStorage,supplyData,next);rawSupply=JSON.stringify(supplyData);return next[kind].find(function(r){return r.id===(record.id||next[kind][next[kind].length-1].id);});
+}
+function scopedLinks(){
+ return supplyData.links.filter(function(r){const s=supplyData.suppliers.find(function(x){return x.id===r.supplierId;});return s&&(state.business==="all"||s.businessId===state.business);});
+}
+function statusTag(status){return '<span class="pill '+(status==="可合作"||status==="已核实"?"tag-ok":status==="归档"||status==="已终止"?"tag-archive":"")+'">'+esc(status)+'</span>';}
+const supplyOriginalModulePage=modulePage;
+modulePage=function(){if(state.page==="A01")renderSupply();else supplyOriginalModulePage();};
+const supplyOriginalHome=home;
+home=function(){supplyOriginalHome();const card=document.querySelector('.card[href*="A01"] .status');if(card)card.textContent="云端可操作";};
+const supplyOriginalSettings=settings;
+settings=function(){supplyOriginalSettings();const p=document.getElementById("page");p.insertAdjacentHTML("afterbegin",'<section class="panel"><div class="section-title"><h2>供应链本地档案</h2></div><p class="muted">供应商、工厂、关联关系可录入与保存。账号内云端保存。手机和电脑登录同一账号可共享数据；Google云盘备份需手动导出。</p><div class="resources">'+navlink("A01","打开供应链档案 →","resource")+'</div></section>');};
+function renderSupply(){
+ const count=function(kind){return filterParties(supplyData,kind,state.business,"","").length;};
+ document.getElementById("page").innerHTML='<div id="supply-notice" class="supply-banner '+(supplyReadError?"error":"")+'" role="status">'+esc(supplyReadError||"云端试用版：档案保存到当前账号。手机与电脑共用数据；请定期导出备份。")+'</div><div class="supply-counts"><div class="supply-count"><strong>'+count("suppliers")+'</strong><span>供应商档案</span></div><div class="supply-count"><strong>'+count("factories")+'</strong><span>工厂档案</span></div><div class="supply-count"><strong>'+scopedLinks().length+'</strong><span>关联关系</span></div></div><div class="supply-tabs" role="group" aria-label="供应链档案分类">'+[["suppliers","供应商"],["factories","工厂"],["links","关联关系"],["logs","操作记录"],["backup","备份与迁移"]].map(function(t){return '<button data-supply-tab="'+t[0]+'" class="'+(supplyTab===t[0]?"selected":"")+'" aria-pressed="'+(supplyTab===t[0])+'">'+t[1]+'</button>';}).join("")+'</div><div id="supply-content"></div>';
+ document.querySelectorAll("[data-supply-tab]").forEach(function(el){el.onclick=function(){supplyTab=el.dataset.supplyTab;supplyQuery="";supplyStatus="";renderSupply();document.querySelector('[data-supply-tab="'+supplyTab+'"]').focus();};});
+ if(supplyTab==="backup")backupPage();else if(supplyTab==="logs")logPage();else recordList();
+}
+function recordList(){
+ const kind=supplyTab,isLink=kind==="links",name=kind==="suppliers"?"供应商":kind==="factories"?"工厂":"关联";
+ const statuses=isLink?LINK_STATUSES:PARTY_STATUSES;
+ document.getElementById("supply-content").innerHTML='<div class="supply-toolbar"><label class="search"><span aria-hidden="true">⌕</span><input id="supply-search" type="search" maxlength="100" value="'+esc(supplyQuery)+'" placeholder="'+(isLink?"搜索供应商、工厂或编号":"搜索名称、联系人、主营或编号")+'" aria-label="搜索'+name+'"></label><select id="supply-status" aria-label="按状态筛选"><option value="">全部状态</option>'+statuses.map(function(s){return '<option '+(s===supplyStatus?"selected":"")+'>'+s+'</option>';}).join("")+'</select><button class="btn primary" id="add-record" '+(supplyReadError?"disabled":"")+'>＋ 新增'+name+'</button></div><div id="record-results" aria-live="polite"></div>';
+ document.getElementById("supply-search").oninput=function(e){supplyQuery=e.target.value;recordResults();};
+ document.getElementById("supply-status").onchange=function(e){supplyStatus=e.target.value;recordResults();};
+ document.getElementById("add-record").onclick=function(){editRecord(kind,null);};recordResults();
+}
+function recordResults(){
+ const kind=supplyTab,isLink=kind==="links";
+ let list=isLink?scopedLinks().filter(function(r){
+ const s=supplyData.suppliers.find(function(x){return x.id===r.supplierId}),f=supplyData.factories.find(function(x){return x.id===r.factoryId});
+ return (!supplyStatus||r.status===supplyStatus)&&(!supplyQuery||[r.id,s.name,f.name,r.type].join(" ").toLowerCase().includes(supplyQuery.toLowerCase()));
+ }):filterParties(supplyData,kind,state.business,supplyQuery,supplyStatus);
+ list=list.slice().sort(function(a,b){return b.updatedAt.localeCompare(a.updatedAt);});
+ if(!list.length){
+ document.getElementById("record-results").innerHTML='<div class="panel supplier-onboarding"><span class="module-icon" aria-hidden="true">'+(kind==="suppliers"?"🏭":kind==="factories"?"🏗️":"🔗")+'</span><h3>'+((supplyQuery||supplyStatus)?"没有匹配的档案":"开始建立你的"+(kind==="suppliers"?"供应商库":kind==="factories"?"工厂库":"供应关系"))+'</h3><p>'+((supplyQuery||supplyStatus)?"调整关键词或状态后再试。":isLink?"先建立供应商和工厂，再把双方关联起来，记录关系类型及核实状态。":"先录入名称和所属业务，其他未知资料可以后补。系统会分配稳定编号，后续采购与库存可沿用。")+'</p><button class="btn" id="empty-add" '+(supplyReadError?"disabled":"")+'>'+((supplyQuery||supplyStatus)?"清除筛选":"新增第一条档案")+'</button></div>';
+ document.getElementById("empty-add").onclick=function(){if(supplyQuery||supplyStatus){supplyQuery="";supplyStatus="";recordList();}else editRecord(kind,null);};return;
+ }
+ const head=isLink?["供应商","工厂","关系类型","核实状态","操作"]:["名称与编号","所属业务","联系人","主营／生产范围","状态","操作"];
+ const rows=list.map(function(r){
+ if(isLink){
+ const s=supplyData.suppliers.find(function(x){return x.id===r.supplierId}),f=supplyData.factories.find(function(x){return x.id===r.factoryId});
+ return '<tr><td>'+esc(s.name)+'<span class="record-id">'+esc(s.id)+'</span></td><td>'+esc(f.name)+'<span class="record-id">'+esc(f.id)+'</span></td><td>'+esc(r.type||"待补充")+'</td><td>'+statusTag(r.status)+'</td><td><button class="text-btn" data-view="'+r.id+'">详情</button><button class="text-btn" data-edit="'+r.id+'">编辑</button></td></tr>';
+ }
+ return '<tr><td><button class="text-btn record-name" data-view="'+r.id+'">'+esc(r.name)+'</button><span class="record-id">'+esc(r.id)+'</span></td><td>'+esc(businessName(r.businessId))+'</td><td>'+esc(r.contact||"待补充")+'<br><span class="subtle">'+esc(r.phone||"")+'</span></td><td>'+esc((r.products||"待补充").slice(0,70))+'</td><td>'+statusTag(r.status)+'</td><td><button class="text-btn" data-view="'+r.id+'">详情</button><button class="text-btn" data-edit="'+r.id+'">编辑</button></td></tr>';
+ }).join("");
+ document.getElementById("record-results").innerHTML='<div class="table-scroll"><table class="supply-table"><thead><tr>'+head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+rows+'</tbody></table></div><div class="export-footer"><span>共 '+list.length+' 条记录 · 业务筛选已应用 · 归档不删除历史</span><button class="text-btn" id="export-csv">导出当前结果 CSV</button></div>';
+ document.querySelectorAll("[data-view]").forEach(function(el){el.onclick=function(){viewRecord(kind,el.dataset.view);};});
+ document.querySelectorAll("[data-edit]").forEach(function(el){el.onclick=function(){editRecord(kind,el.dataset.edit);};});
+ document.getElementById("export-csv").onclick=function(){const subset=cloneSupply(supplyData);subset[kind]=list;downloadData("OPC-"+kind+"-"+state.business+".csv",supplyCSV(subset,kind),"text/csv;charset=utf-8");};
+}
+function optionHTML(value,label,selected){return '<option value="'+esc(value)+'" '+(value===selected?"selected":"")+'>'+esc(label)+'</option>';}
+function fieldHTML(key,label,value,options,wide,type,required){
+ const id="sf-"+key;
+ let control=options?'<select id="'+id+'" name="'+key+'" '+(required?"required":"")+'>'+options.map(function(o){return optionHTML(Array.isArray(o)?o[0]:o,Array.isArray(o)?o[1]:o,value);}).join("")+'</select>':type==="textarea"?'<textarea id="'+id+'" name="'+key+'" maxlength="8000">'+esc(value||"")+'</textarea>':'<input id="'+id+'" name="'+key+'" type="'+(type||"text")+'" maxlength="1000" value="'+esc(value||"")+'" '+(required?"required":"")+'>';
+ return '<div class="form-field '+(wide?"full":"")+'"><label for="'+id+'">'+label+(required?" *":"")+'</label>'+control+'</div>';
+}
+function openSupplyDialog(html){
+ const dialog=document.getElementById("dialog");dialog.classList.add("supply-dialog");document.getElementById("dialog-body").innerHTML=html;
+ if(!dialog.open)dialog.showModal();
+ dialog.addEventListener("close",function(){dialog.classList.remove("supply-dialog");},{once:true});
+}
+function editRecord(kind,id){
+ if(supplyReadError){showToast(supplyReadError);return;}
+ const current=id?supplyData[kind].find(function(r){return r.id===id;}):null;
+ if(id&&!current){showToast("档案不存在。");return;}
+ const rec=current||{businessId:state.business==="all"?"BUS-001":state.business,status:"待核实",type:kind==="suppliers"?"待核实":""};
+ let fields=[];
+ if(kind==="links"){
+ const parties=function(k){return supplyData[k].filter(function(r){return (state.business==="all"||r.businessId===state.business)&&(r.status!=="归档"||(current&&(r.id===current.supplierId||r.id===current.factoryId)));}).map(function(r){return [r.id,r.name+" · "+businessName(r.businessId)];});};
+ const suppliers=parties("suppliers"),factories=parties("factories");
+ if(!suppliers.length||!factories.length){showToast("请先在当前业务下建立供应商和工厂档案。");return;}
+ fields=[
+ ["supplierId","供应商",suppliers,false,"text",true],["factoryId","工厂",factories,false,"text",true],
+ ["type","关系类型（如直属工厂、委托生产）",null,false],["status","核实状态",LINK_STATUSES,false,"text",true],
+ ["proof","关系证明链接",null,true,"url"],["startDate","关系起始日期（已知时填）",null,false,"date"],["endDate","关系终止日期（已知时填）",null,false,"date"],["notes","备注",null,true,"textarea"]
+ ];
+ }else{
+ fields=[
+ ["name",kind==="suppliers"?"供应商名称":"工厂名称",null,true,"text",true],
+ ["businessId","所属业务",CONFIG.businesses.filter(function(b){return b[0]!=="all"}),false,"text",true],
+ ...(kind==="suppliers"?[["type","供应商类型",SUPPLIER_TYPES,false,"text",true],["creditCode","统一社会信用代码",null,false]]:[]),
+ ["status","合作状态",PARTY_STATUSES,false,"text",true],
+ ["country","国家／地区",null,false],["address",kind==="factories"?"生产地址":"地址",null,true],
+ ["contact","联系人",null,false],["phone","电话",null,false,"tel"],
+ ...(kind==="suppliers"?[["messenger","微信／WhatsApp",null,false],["email","邮箱",null,false,"email"],["website","1688／官网链接",null,true,"url"],["products","主营产品与材料",null,true,"textarea"],["currency","结算币种",["","CNY","USD","EUR","GBP","其他"],false],["paymentTerms","付款条件",null,false],["verifiedAt","资料核实日期（未核实留空）",null,false,"date"]]:
+ [["process","工艺与设备",null,true,"textarea"],["capacity","产能及单位（未核实可留空）",null,false],["products","可生产范围",null,false],["certificates","证书及有效期",null,true,"textarea"],["inspection","验厂记录",null,true,"textarea"]]),
+ ["documents","资料链接（每行一个；文件先放云盘）",null,true,"textarea"],["notes","备注",null,true,"textarea"]
+ ];
+ }
+ openSupplyDialog('<h2>'+(id?"编辑":"新增")+(kind==="suppliers"?"供应商":kind==="factories"?"工厂":"供应关系")+'</h2><p class="form-help">* 为必填项；其他未知资料可以留空。'+(id?"编号保持不变。":"编号自动生成。")+'</p><form id="supply-form"><div class="form-grid">'+fields.map(function(f){return fieldHTML(f[0],f[1],rec[f[0]]||"",f[2],f[3],f[4],f[5]);}).join("")+'</div><div id="form-error" class="form-error" role="alert"></div><div class="form-actions"><button type="button" class="btn" id="form-cancel">取消</button><button type="submit" class="btn primary">保存档案</button></div></form>');
+ document.getElementById("form-cancel").onclick=function(){document.getElementById("dialog").close();};
+ const form=document.getElementById("supply-form");
+ form.onsubmit=async function(e){
+ e.preventDefault();const submit=form.querySelector('button[type="submit"]');submit.disabled=true;
+ try{
+  const data=current?cloneSupply(current):{};
+  fields.forEach(function(f){data[f[0]]=form.elements[f[0]].value.trim();});
+  await saveRecord(kind,data);document.getElementById("dialog").close();renderSupply();showToast("已保存到云端。");
+ }catch(err){document.getElementById("form-error").textContent=cleanError(err);submit.disabled=false;}
+ };
+}
+function labelsFor(kind){
+ const common={id:"档案编号",businessId:"所属业务",name:"名称",country:"国家／地区",address:"地址",contact:"联系人",phone:"电话",products:"主营／生产范围",status:"状态",documents:"资料链接",notes:"备注",createdAt:"创建时间",updatedAt:"更新时间"};
+ return Object.assign(common,kind==="suppliers"?{type:"供应商类型",creditCode:"信用代码",messenger:"微信／WhatsApp",email:"邮箱",website:"1688／官网",currency:"结算币种",paymentTerms:"付款条件",verifiedAt:"资料核实日期"}:kind==="factories"?{process:"工艺与设备",capacity:"产能及单位",certificates:"证书与有效期",inspection:"验厂记录"}:{supplierId:"供应商编号",factoryId:"工厂编号",type:"关系类型",proof:"证明链接",startDate:"关系起始日期",endDate:"关系终止日期"});
+}
+function viewRecord(kind,id){
+ const r=supplyData[kind].find(function(x){return x.id===id;});if(!r)return;
+ const labels=labelsFor(kind);
+ const meta=SUPPLY_FIELDS[kind].map(function(key){
+ let v=r[key]||"待补充";if((key==="createdAt"||key==="updatedAt")&&r[key])v=displayTime(r[key]);
+ if(key==="businessId")v=businessName(r[key]);
+ let out=esc(v);
+ if((key==="website"||key==="proof")&&r[key]&&checkURL(r[key]))out='<a href="'+esc(r[key])+'" target="_blank" rel="noopener noreferrer">'+esc(r[key])+' ↗</a>';
+ if(key==="documents"&&r[key])out=r[key].split(/\r?\n/).filter(Boolean).map(function(u,i){return '<a href="'+esc(u.trim())+'" target="_blank" rel="noopener noreferrer">资料链接 '+(i+1)+' ↗</a>';}).join("<br>");
+ return '<div class="'+(["notes","documents","process","inspection","products","certificates"].includes(key)?"full":"")+'"><dt>'+esc(labels[key]||key)+'</dt><dd>'+out+'</dd></div>';
+ }).join("");
+ const links=kind==="links"?[]:supplyData.links.filter(function(x){return kind==="suppliers"?x.supplierId===id:x.factoryId===id;});
+ const relations=links.length?'<h3>关联'+(kind==="suppliers"?"工厂":"供应商")+'</h3><div class="detail-links">'+links.map(function(l){const related=supplyData[kind==="suppliers"?"factories":"suppliers"].find(function(p){return p.id===(kind==="suppliers"?l.factoryId:l.supplierId);});return '<div class="detail-link"><button class="text-btn" data-related-kind="'+(kind==="suppliers"?"factories":"suppliers")+'" data-related-id="'+related.id+'">'+esc(related.name)+'</button>'+statusTag(l.status)+'</div>';}).join("")+'</div>':kind==="links"?"":'<p class="muted">暂无关联记录；可在「关联关系」中建立。</p>';
+ openSupplyDialog('<h2>'+esc(r.name||"供应关系详情")+'</h2><dl class="detail-meta">'+meta+'</dl>'+relations+'<div class="form-actions">'+(kind!=="links"?'<button class="btn danger-btn" id="archive-record">'+(r.status==="归档"?"恢复为待核实":"归档")+'</button>':"")+'<button class="btn primary" id="edit-detail">编辑档案</button></div>');
+ document.getElementById("edit-detail").onclick=function(){editRecord(kind,id);};
+ const archive=document.getElementById("archive-record");if(archive)archive.onclick=async function(){try{const updated=cloneSupply(r);updated.status=r.status==="归档"?"待核实":"归档";await saveRecord(kind,updated);document.getElementById("dialog").close();renderSupply();showToast("状态已保存；历史关联保留。");}catch(e){showToast(cleanError(e));}};
+ document.querySelectorAll("[data-related-id]").forEach(function(el){el.onclick=function(){viewRecord(el.dataset.relatedKind,el.dataset.relatedId);};});
+}
+function downloadData(name,data,mime){
+ const blob=new Blob([data],{type:mime||"application/json;charset=utf-8"}),href=URL.createObjectURL(blob),a=document.createElement("a");a.href=href;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(href);},30000);
+}
+function backupPage(){
+ document.getElementById("supply-content").innerHTML='<div class="backup-grid"><section class="panel"><h3>导出完整备份</h3><p>包含全部业务的供应商、工厂、关系、稳定编号和操作记录。换设备、换浏览器或升级文件前先导出，再在新版本导入。</p><button class="btn primary" id="backup-export">'+(supplyReadError?"导出原始本地数据":"导出全部备份 JSON")+'</button></section><section class="panel"><h3>导入备份 · 合并新增</h3><p>导入本工作台导出的JSON。已有编号内容相同则跳过；内容冲突会停止导入，不覆盖现有档案。导入前请先导出当前备份。</p><input id="backup-file" type="file" accept=".json,application/json" '+(supplyReadError?"disabled":"")+' aria-label="选择工作台备份JSON"><div id="import-message" class="form-error" role="alert"></div></section></div><section class="panel boundary"><h3>后续通路</h3><p>档案编号在后续采购、出入库和云端数据库中保持不变。供应商与工厂可分别导出CSV，表头顺序与现有云盘档案表对齐。CSV是人工迁移材料，不会自动同步；尚不支持通过CSV回写。</p><h3>当前保存范围</h3><p>此版本写入登录账号的云端数据库，Google云盘备份与自动Agent尚未接入。请保留定期导出的完整JSON备份。</p></section>';
+ document.getElementById("backup-export").onclick=function(){if(supplyReadError){downloadData("OPC-原始本地档案.json",rawSupply||"{}");return;}downloadData("OPC-供应链备份-"+new Date().toISOString().slice(0,10)+".json",JSON.stringify({format:"opc.supply.backup",version:1,exportedAt:nowString(),data:supplyData},null,2));showToast("已发起下载，请确认备份文件已保存。");};
+ document.getElementById("backup-file").onchange=async function(e){
+ const file=e.target.files[0];if(!file)return;const message=document.getElementById("import-message");
+ try{
+  if(file.size>8*1024*1024)throw Error("备份文件超过8MB，请拆分或联系维护。");
+  const parsed=JSON.parse(await file.text());if(parsed.format!=="opc.supply.backup"||parsed.version!==1)throw Error("请选择本工作台导出的JSON备份。");
+  const prepared=prepareSupplyImport(supplyData,parsed.data,nowString(),supplyID),added=prepared.added,checked=prepared.data;if(!confirm("即将合并新增 "+added+" 条档案。已有档案不会被覆盖。确认已备份当前数据并继续？")){e.target.value="";return;}
+  supplyData=await cloudPersistSupply(workspaceStorage,supplyData,checked);rawSupply=JSON.stringify(supplyData);renderSupply();showToast("备份已导入，新增 "+added+" 条档案。");
+ }catch(err){message.textContent=cleanError(err);e.target.value="";}
+ };
+}
+function logPage(){
+ const logs=supplyData.logs.filter(function(l){if(state.business==="all")return true;if(l.kind==="system")return true;const r=(supplyData[l.kind]||[]).find(function(x){return x.id===l.entityId;});if(!r)return false;if(l.kind==="links"){const s=supplyData.suppliers.find(function(x){return x.id===r.supplierId;});return s&&s.businessId===state.business;}return r.businessId===state.business;}).slice().reverse();
+ document.getElementById("supply-content").innerHTML='<div class="panel"><h3>档案操作记录</h3><p class="muted">保存新增、编辑、归档及导入记录。界面显示最近100条，全部记录包含在JSON备份中。</p></div><div class="table-scroll"><table class="supply-table"><thead><tr><th>时间</th><th>操作</th><th>类型</th><th>档案编号</th><th>详情</th></tr></thead><tbody>'+(logs.length?logs.slice(0,100).map(function(l){return '<tr><td>'+esc(displayTime(l.at))+'</td><td>'+esc(l.action)+'</td><td>'+esc({suppliers:"供应商",factories:"工厂",links:"关联关系",system:"系统"}[l.kind]||l.kind)+'</td><td><span class="record-id">'+esc(l.entityId)+'</span></td><td><button class="text-btn" data-log="'+esc(l.id)+'">查看变更</button></td></tr>';}).join(""):'<tr><td class="empty-cell" colspan="5">尚无操作记录；保存档案后会自动生成。</td></tr>')+'</tbody></table></div>';
+ document.querySelectorAll("[data-log]").forEach(function(el){el.onclick=function(){const l=logs.find(function(x){return x.id===el.dataset.log;});openSupplyDialog('<h2>'+esc(l.action)+' · 操作详情</h2><p class="muted">'+esc(l.at)+'</p><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px">'+esc(l.detail)+'</pre>');};});
+}
+window.addEventListener("storage",function(e){if(e.key===SUPPLY_KEY){const notice=document.getElementById("supply-notice");if(notice){notice.classList.add("error");notice.textContent="另一个窗口已更新档案。请刷新本页面后继续编辑，避免覆盖更新。";}}});
+shell();
+
+
+
+
+
+
+const OPS_SPEC={"tables":{"products":{"code":"PRD","label":"产品档案","module":"A02","fields":[["name","产品名称","text",true],["businessId","所属业务","business",true],["brand","品牌","text"],["model","型号","text",true],["material","材料／品类","text"],["parameterURL","正式参数资料链接","url"],["parameterStatus","参数核实","select",true,["待提供","待核实","已核实"]],["status","状态","select",true,["在用","暂停","归档"]],["notes","备注","textarea",false]]},"skus":{"code":"SKU","label":"SKU规格","module":"A02","fields":[["name","规格名称","text",true],["businessId","所属业务","business",true],["productId","产品","ref:products",true],["color","颜色／色号","text"],["size","尺寸／线径","text"],["weight","净重说明","text"],["unit","单位","select",true,["kg","卷","件","个","包","双","套"]],["barcode","条码","text"],["status","状态","select",true,["在用","暂停","归档"]],["notes","备注","textarea",false]]},"offers":{"code":"SRC","label":"供货关系与成本","module":"A02","fields":[["businessId","所属业务","business",true],["skuId","SKU规格","ref:skus",true],["supplierId","供应商","ref:suppliers",true],["factoryId","工厂","ref:factories"],["unitPrice","单价","number",true],["currency","币种","select",true,["CNY","USD","EUR","GBP","其他"]],["unit","单位","select",true,["kg","卷","件","个","包","双","套"]],["moq","起订量","number"],["leadTime","交期说明","text"],["terms","贸易条款","text"],["validUntil","有效截至","date"],["sourceURL","报价依据链接","url"],["status","核实状态","select",true,["待核实","已核实","失效"]],["notes","备注","textarea",false]]},"salesPrices":{"code":"QTE","label":"销售参考价","module":"A02","fields":[["businessId","所属业务","business",true],["productId","产品","ref:products",true],["currency","币种","select",true,["CNY","USD","EUR","GBP","其他"]],["unit","单位","select",true,["kg","卷","件","个","包","双","套"]],["minQty","数量下限（含）","number",true],["maxQty","数量上限（不含；空为无限）","number"],["unitPrice","单价","number",true],["terms","贸易条款","text"],["validUntil","有效截至","date"],["sourceURL","来源链接","url"],["status","确认状态","select",true,["参考／使用前确认","已核实","失效"]],["notes","备注","textarea",false]]},"purchases":{"code":"PUR","label":"采购明细","module":"A03","fields":[["documentNo","采购单号（同单多行可复用）","text"],["businessId","所属业务","business",true],["supplierId","供应商","ref:suppliers",true],["factoryId","工厂","ref:factories"],["skuId","SKU规格","ref:skus",true],["quantity","数量","number",true],["unit","单位","select",true,["kg","卷","件","个","包","双","套"]],["unitPrice","单价","number",true],["currency","币种","select",true,["CNY","USD","EUR","GBP","其他"]],["warehouseId","收货仓库","ref:warehouses",true],["expectedDate","预计到货日","date"],["status","采购进度","select",true,["草稿","已下单","取消"]],["sourceURL","采购凭证链接","url"],["notes","备注","textarea",false]]},"warehouses":{"code":"WH","label":"仓库档案","module":"A04","fields":[["name","仓库名称","text",true],["businessId","所属业务","business",true],["country","国家／地区","text"],["address","地址","text"],["contact","联系人","text"],["phone","电话","tel"],["status","状态","select",true,["在用","暂停","归档"]],["notes","备注","textarea",false]]},"movements":{"code":"MOV","label":"出入库流水","module":"A04","fields":[["businessId","所属业务","business",true],["skuId","SKU规格","ref:skus",true],["warehouseId","仓库","ref:warehouses",true],["action","动作","select",true,["期初入库","采购入库","销售出库","退货入库","采购退货","盘盈","盘亏","调拨入库","调拨出库","冲销"]],["quantity","数量","number",true],["unit","单位","select",true,["kg","卷","件","个","包","双","套"]],["sourceId","关联明细编号（收发货时自动带入）","text"],["supplierId","来源供应商","ref:suppliers"],["factoryId","来源工厂","ref:factories"],["batch","批次号","text"],["status","审核状态","select",true,["草稿","已审核","作废"]],["reversalOf","冲销原流水编号","text"],["transferId","调拨关联编号","text"],["sourceURL","凭证链接","url"],["notes","备注","textarea",false]]},"assets":{"code":"AST","label":"资料与素材","module":"A05","fields":[["name","资料标题","text",true],["businessId","所属业务","business",true],["productId","关联产品","ref:products"],["kind","资料类型","select",true,["产品图片","原始视频","剪辑成片","封面","参数资料","授权证明","其他"]],["url","云盘或文件链接","url",true],["authorization","使用授权","select",true,["待确认","允许推广","自有素材","禁用"]],["status","核实状态","select",true,["待核实","已核实","禁用"]],["notes","备注","textarea",false]]},"content":{"code":"CNT","label":"内容发布","module":"A05","fields":[["name","内容主题","text",true],["businessId","所属业务","business",true],["skuId","关联SKU","ref:skus"],["assetId","主要素材","ref:assets"],["platform","发布平台","select",true,["Facebook","Instagram","淘宝","Shopify","其他"]],["language","内容语言","select",true,["英语","中文","其他"]],["coverText","封面文字","text"],["caption","发布文案","textarea"],["tags","标签","text"],["plannedDate","计划日期","date"],["status","制作进度","select",true,["待素材","待制作","待审核","待发布","已发布","暂停"]],["publishURL","发布链接","url"],["views","播放量","number"],["inquiries","询盘数","number"],["notes","备注","textarea",false]]},"channels":{"code":"CHN","label":"渠道与店铺","module":"A06","fields":[["name","店铺／账号名称","text",true],["businessId","所属业务","business",true],["platform","渠道","select",true,["淘宝","Shopify","独立站","Facebook","Instagram","WhatsApp","其他"]],["url","店铺或主页链接","url"],["market","目标市场","text"],["checkStatus","购买路径检查","select",true,["待检查","检查通过","需修复"]],["checkedDate","检查日期","date"],["status","状态","select",true,["在用","暂停","归档"]],["notes","备注","textarea",false]]},"listings":{"code":"LST","label":"上架与优化","module":"A06","fields":[["name","商品页面任务","text",true],["businessId","所属业务","business",true],["channelId","渠道","ref:channels",true],["skuId","SKU规格","ref:skus",true],["unitPrice","单价","number",true],["currency","币种","select",true,["CNY","USD","EUR","GBP","其他"]],["url","商品链接","url"],["status","进度","select",true,["准备中","待审核","已上架","优化中","已下架"]],["nextAction","下一步","textarea"],["notes","备注","textarea",false]]},"customers":{"code":"CUS","label":"客户档案","module":"A07","fields":[["name","客户名称","text",true],["businessId","所属业务","business",true],["country","国家／地区","text"],["channel","来源渠道","select",true,["淘宝","Shopify","独立站","WhatsApp","其他"]],["contact","联系人","text"],["phone","电话／WhatsApp","text"],["email","邮箱","email"],["customerType","客户类型","select",true,["个人买家","打印农场","经销商","企业客户","其他"]],["nextDate","下次跟进日","date"],["status","状态","select",true,["在用","暂停","归档"]],["notes","备注","textarea",false]]},"leads":{"code":"LEA","label":"询盘跟进","module":"A07","fields":[["name","需求主题","text",true],["businessId","所属业务","business",true],["customerId","客户","ref:customers",true],["skuId","意向SKU","ref:skus"],["quantity","需求数量","number"],["unit","单位","select",false,["","kg","卷","件","个","包","双","套"]],["requirements","需求原文／要点","textarea"],["country","交付国家","text"],["nextDate","下次跟进日","date"],["status","询盘阶段","select",true,["新询盘","需求确认","待报价","已报价","跟进中","已成交","未成交"]],["notes","备注","textarea",false]]},"quotes":{"code":"OFR","label":"对客报价明细","module":"A07","fields":[["documentNo","报价单号（同单多行可复用）","text"],["businessId","所属业务","business",true],["customerId","客户","ref:customers",true],["leadId","关联询盘","ref:leads"],["skuId","SKU规格","ref:skus",true],["quantity","数量","number",true],["unit","单位","select",true,["kg","卷","件","个","包","双","套"]],["unitPrice","单价","number",true],["currency","币种","select",true,["CNY","USD","EUR","GBP","其他"]],["freight","本行分摊运费（未知留空）","number"],["terms","贸易条款","text"],["destination","交付地点","text"],["paymentTerms","付款条件","text"],["leadTime","交期说明","text"],["validUntil","有效截至","date"],["status","报价状态","select",true,["草稿","待确认","已发送","已接受","已失效"]],["notes","备注","textarea",false]]},"orders":{"code":"ORD","label":"销售订单明细","module":"A08","fields":[["documentNo","订单号（同单多行可复用）","text"],["orderDate","订单日期","date",true],["businessId","所属业务","business",true],["channel","成交渠道","select",true,["淘宝","Shopify","独立站","WhatsApp","其他"]],["customerId","客户（平台订单可后补）","ref:customers"],["quoteId","来源报价明细","ref:quotes"],["skuId","SKU规格","ref:skus",true],["quantity","数量","number",true],["unit","单位","select",true,["kg","卷","件","个","包","双","套"]],["unitPrice","单价","number",true],["currency","币种","select",true,["CNY","USD","EUR","GBP","其他"]],["warehouseId","发货仓库","ref:warehouses",true],["paymentStatus","收款状态","select",true,["未收款","部分收款","已收款","赊销","部分退款","已退款"]],["tracking","物流单号","text"],["status","履约状态","select",true,["正常","已交付","取消"]],["sourceURL","订单凭证链接","url"],["notes","备注","textarea",false]]},"returns":{"code":"RET","label":"售后工单","module":"A09","fields":[["name","售后主题","text",true],["businessId","所属业务","business",true],["orderId","原订单明细","ref:orders",true],["kind","问题类型","select",true,["退货退款","仅退款","换货","质量／使用问题","其他"]],["quantity","退货数量（仅退款可为0）","number",true],["reason","问题及证据说明","textarea",true],["refundAmount","拟退款金额","number"],["currency","币种","select",true,["CNY","USD","EUR","GBP","其他"]],["warehouseId","退回仓库","ref:warehouses"],["status","处理进度","select",true,["待处理","处理中","待退货","待退款","已完成","关闭"]],["sourceURL","证据链接","url"],["notes","备注","textarea",false]]},"payments":{"code":"PAY","label":"收支流水","module":"A10","fields":[["name","收支事项","text",true],["businessId","所属业务","business",true],["date","发生日期","date",true],["direction","收／支","select",true,["收","支"]],["category","收支类别","select",true,["销售收款","采购付款","客户退款","运费","推广费","平台费用","包装","其他"]],["amount","原币金额","number",true],["currency","币种","select",true,["CNY","USD","EUR","GBP","其他"]],["fx","人民币汇率（CNY填1）","number",true],["sourceId","关联业务单据编号","text"],["receiptRef","支付流水号（有则填写）","text"],["status","确认状态","select",true,["待核实","已确认","作废"]],["sourceURL","凭证链接","url"],["notes","备注","textarea",false]]},"tasks":{"code":"TSK","label":"任务与行动","module":"A00","fields":[["name","任务名称","text",true],["businessId","所属业务","business",true],["module","负责板块","select",true,["A00","A01","A02","A03","A04","A05","A06","A07","A08","A09","A10","A11"]],["priority","优先级","select",true,["P0","P1","P2"]],["owner","负责人","text"],["dueDate","截止日期","date"],["nextAction","下一步","textarea"],["status","任务状态","select",true,["待办","进行中","待验证","受阻","已完成","取消"]],["outputURL","产出链接","url"],["notes","备注","textarea",false]]},"metrics":{"code":"MET","label":"经营指标","module":"A11","fields":[["name","指标名称","select",true,["访客数","支付买家数","支付订单数","支付件数","支付金额","退款金额","播放量","询盘数","推广花费","其他"]],["businessId","所属业务","business",true],["channel","渠道","select",true,["淘宝","Shopify","独立站","WhatsApp","Facebook","Instagram","其他"]],["startDate","开始日期","date",true],["endDate","结束日期","date",true],["value","数值","number",true],["unit","指标单位","text",true],["definition","统计口径","textarea",true],["source","来源说明或链接","textarea",true],["status","核实状态","select",true,["待核实","已核实"]],["notes","备注","textarea",false]]}},"map":{"A00":["tasks"],"A02":["products","skus","offers","salesPrices"],"A03":["purchases","offers"],"A04":["balance","movements","warehouses"],"A05":["content","assets"],"A06":["channels","listings"],"A07":["customers","leads","quotes"],"A08":["orders"],"A09":["returns","customers"],"A10":["payments"],"A11":["summary","metrics","tasks"]},"seedProducts":[],"seedPrices":[]};
+
+
+const OPS_KEY="opc.operations.v1";
+function opsEmpty(seed){const d={version:1,revision:0,logs:[]};Object.keys(OPS_SPEC.tables).forEach(function(k){d[k]=[];});if(seed){d.products=cloneSupply(OPS_SPEC.seedProducts);d.salesPrices=cloneSupply(OPS_SPEC.seedPrices);}return d;}
+function opsFind(d,s,kind,id){return (kind==="suppliers"||kind==="factories"?s[kind]:d[kind]||[]).find(function(r){return r.id===id;});}
+function opsLabel(r){return r?r.name||r.documentNo||r.id:"未找到";}
+function opsOriginal(d,m){return m.action==="冲销"?d.movements.find(function(x){return x.id===m.reversalOf;}):m;}
+function opsMoveSign(d,m){if(m.status!=="已审核")return 0;const base=opsOriginal(d,m);if(!base)throw Error("冲销原流水不存在");const sign=["期初入库","采购入库","退货入库","盘盈","调拨入库"].includes(base.action)?1:-1;return sign*(m.action==="冲销"?-1:1);}
+function opsBalance(d,sku,wh){return d.movements.reduce(function(n,m){return n+(m.skuId===sku&&m.warehouseId===wh?opsMoveSign(d,m)*m.quantity:0);},0);}
+function opsSourceQty(d,source,action){
+return d.movements.reduce(function(n,m){if(m.status!=="已审核")return n;const base=opsOriginal(d,m);if(base.sourceId!==source||base.action!==action)return n;return n+m.quantity*(m.action==="冲销"?-1:1);},0);
+}
+function opsShipped(d,id){return opsSourceQty(d,id,"销售出库");}
+function opsReceived(d,id){return opsSourceQty(d,id,"采购入库")-opsSourceQty(d,id,"采购退货");}
+function opsReturned(d,id){return opsSourceQty(d,id,"退货入库");}
+function opsLineTotal(r){return Number(r.quantity||0)*Number(r.unitPrice||0);}
+function opsCash(d,business){return d.payments.filter(function(r){return r.status==="已确认"&&(business==="all"||r.businessId===business);}).reduce(function(n,r){return n+(r.direction==="收"?1:-1)*r.amount*r.fx;},0);}
+function opsPaidOrders(d,business,channel){
+const groups={};d.orders.filter(function(r){return (business==="all"||r.businessId===business)&&(!channel||r.channel===channel);}).forEach(function(r){const key=r.businessId+"|"+r.channel+"|"+r.documentNo;(groups[key]||(groups[key]=[])).push(r);});
+return Object.values(groups).filter(function(rows){return rows.every(function(r){return r.status!=="取消"&&r.paymentStatus==="已收款";});}).length;
+}
+function opsValidate(input,supply){
+ if(!input||input.version!==1||!Number.isInteger(input.revision)||input.revision<0)throw Error("业务备份版本或修订号错误");
+ const d=opsEmpty(false);d.revision=input.revision;
+ Object.entries(OPS_SPEC.tables).forEach(function(entry){
+ const kind=entry[0],def=entry[1],ids=new Set();
+ if(!Array.isArray(input[kind])||input[kind].length>15000)throw Error(def.label+"格式错误或超过15000条");
+ d[kind]=input[kind].map(function(raw){
+  if(!raw||typeof raw!=="object")throw Error("记录格式错误");
+  const r={};["id","createdAt","updatedAt","postedAt"].forEach(function(k){r[k]=String(raw[k]||"");});
+  if(!r.id.startsWith(def.code+"-")||!/^[A-Za-z0-9_-]{5,100}$/.test(r.id)||ids.has(r.id))throw Error(def.label+"编号重复或无效");ids.add(r.id);
+  def.fields.forEach(function(f){const key=f[0],value=raw[key];if(f[2]==="number"){r[key]=value===""||value==null?"":Number(value);if(r[key]!==""&&!Number.isFinite(r[key]))throw Error(f[1]+"必须为数字");}else{if(value!=null&&typeof value!=="string")throw Error(f[1]+"必须为文本");r[key]=String(value||"").trim();if(r[key].length>10000)throw Error(f[1]+"内容过长");}
+  if(f[3]&&(r[key]===""||r[key]==null))throw Error(def.label+"缺少："+f[1]);
+  if(r[key]!==""&&f[2]==="select"&&!f[4].includes(r[key]))throw Error(f[1]+"选项无效");
+  if(r[key]&&f[2]==="url"&&!checkURL(r[key]))throw Error(f[1]+"链接无效");
+  if(r[key]&&f[2]==="date"&&(!/^\d{4}-\d{2}-\d{2}$/.test(r[key])||(Number.isNaN(new Date(r[key]+"T00:00:00Z").getTime())||new Date(r[key]+"T00:00:00Z").toISOString().slice(0,10)!==r[key])))throw Error(f[1]+"日期无效");
+  if(f[2]==="number"&&r[key]!==""&&r[key]<0)throw Error(f[1]+"不能为负数");
+  });
+  if(!BUSINESS_IDS.includes(r.businessId))throw Error("所属业务无效");
+  return r;
+ });
+ });
+ Object.entries(OPS_SPEC.tables).forEach(function(entry){
+ const kind=entry[0],def=entry[1];
+ d[kind].forEach(function(r){
+ def.fields.filter(function(f){return f[2].startsWith("ref:")&&r[f[0]];}).forEach(function(f){
+ const t=f[2].slice(4),other=opsFind(d,supply,t,r[f[0]]);
+ if(!other)throw Error(def.label+"引用的"+f[1]+"不存在");
+ if(other.businessId!==r.businessId)throw Error(def.label+"与"+f[1]+"所属业务不一致");
+ });
+ if(r.skuId&&r.unit){const sku=opsFind(d,supply,"skus",r.skuId);if(sku.unit!==r.unit)throw Error(def.label+"单位须与SKU基础单位一致，不自动换算");}
+ if(["purchases","orders","quotes","movements"].includes(kind)&&!(r.quantity>0))throw Error("数量必须大于0");
+ if(kind==="products"&&r.parameterStatus==="已核实"&&!r.parameterURL)throw Error("已核实参数必须提供来源链接");
+ if(kind==="offers"&&r.factoryId&&!supply.links.some(function(l){return l.supplierId===r.supplierId&&l.factoryId===r.factoryId&&l.status!=="已终止";}))throw Error("供货工厂须先与供应商建立有效关系");
+ if(kind==="salesPrices"&&r.maxQty!==""&&r.maxQty<=r.minQty)throw Error("价格数量上限须大于下限");
+ if(["purchases","quotes","orders"].includes(kind)&&!r.documentNo)throw Error("单据号不能为空");
+ if(kind==="assets"&&r.status==="已核实"&&r.authorization==="禁用")throw Error("禁用素材不能标为已核实");
+ if(kind==="content"&&r.status==="已发布"&&!r.publishURL)throw Error("已发布内容需要填写发布链接");
+ if(kind==="content"&&r.assetId&&r.status==="已发布"){
+ const a=opsFind(d,supply,"assets",r.assetId);
+ if(a.status==="禁用"||!["允许推广","自有素材"].includes(a.authorization))throw Error("发布素材授权尚未确认或已禁用");
+ }
+ if(kind==="payments"){
+ if(!(r.amount>0)||!(r.fx>0))throw Error("收支金额与汇率必须大于0");
+ if(r.currency==="CNY"&&r.fx!==1)throw Error("人民币收支的人民币汇率必须为1");
+ }
+ if(kind==="metrics"&&r.startDate>r.endDate)throw Error("指标结束日期不能早于开始日期");
+ });
+ });
+ ["products","skus","warehouses","customers","channels"].forEach(function(kind){
+ const seen=new Set();d[kind].forEach(function(r){const key=r.businessId+"|"+normalizeName(kind==="products"?r.model:r.name);if(seen.has(key))throw Error(OPS_SPEC.tables[kind].label+"存在同业务重名或重复型号");seen.add(key);});
+ });
+ const refs=new Set();d.payments.filter(function(r){return r.receiptRef&&r.status!=="作废";}).forEach(function(r){const key=r.businessId+"|"+r.direction+"|"+r.currency+"|"+r.receiptRef;if(refs.has(key))throw Error("同业务支付流水号重复");refs.add(key);});
+ const reversed=new Set(),transfers={};
+ d.movements.forEach(function(m){
+ if(m.status!=="已审核")return;
+ if(!m.postedAt||Number.isNaN(new Date(m.postedAt).getTime()))throw Error("已审核流水缺少有效入账时间");
+ if(m.action==="冲销"){
+ const original=d.movements.find(function(x){return x.id===m.reversalOf;});
+ if(!original||original.action==="冲销"||original.status!=="已审核"||["调拨入库","调拨出库"].includes(original.action))throw Error("原流水不可单笔冲销；调拨需成对处理");
+ if(reversed.has(original.id))throw Error("原流水已冲销，不可重复");reversed.add(original.id);
+ if(["businessId","skuId","warehouseId","unit","quantity","sourceId","supplierId","factoryId","batch"].some(function(k){return m[k]!==original[k];}))throw Error("冲销须与原流水的数量、单据及来源完全一致");
+ }else{
+ if(m.reversalOf)throw Error("仅冲销动作可关联原流水");
+ const sku=opsFind(d,supply,"skus",m.skuId);
+ if(!sku)throw Error("出入库SKU不存在");
+ if(["采购入库","采购退货"].includes(m.action)){
+ const p=opsFind(d,supply,"purchases",m.sourceId);
+ if(!p||p.businessId!==m.businessId||p.skuId!==m.skuId||p.warehouseId!==m.warehouseId||p.supplierId!==m.supplierId||p.factoryId!==m.factoryId)throw Error("采购流水必须与采购明细的业务、SKU、仓库及供应商工厂一致");
+ }
+ if(m.action==="销售出库"){
+ const o=opsFind(d,supply,"orders",m.sourceId);
+ if(!o||o.businessId!==m.businessId||o.skuId!==m.skuId||o.warehouseId!==m.warehouseId)throw Error("出库须关联同业务SKU及仓库的销售明细");
+ }
+ if(m.action==="退货入库"){
+ const ret=opsFind(d,supply,"returns",m.sourceId),o=ret&&opsFind(d,supply,"orders",ret.orderId);
+ if(!ret||!o||o.skuId!==m.skuId||ret.businessId!==m.businessId||ret.warehouseId!==m.warehouseId)throw Error("退货须关联同业务SKU及退回仓库的售后工单");
+ }
+ if(["期初入库","盘盈","盘亏"].includes(m.action)&&!m.notes)throw Error("期初和盘点流水需填写依据说明");
+ if(["调拨入库","调拨出库"].includes(m.action)){if(!m.transferId)throw Error("调拨缺少关联号");(transfers[m.transferId]||(transfers[m.transferId]=[])).push(m);}
+ }
+ });
+ 
+ const reversedTransfers=new Set();
+ Object.values(transfers).forEach(function(pair){
+ if(pair.length!==2||pair[0].action===pair[1].action||pair[0].skuId!==pair[1].skuId||pair[0].businessId!==pair[1].businessId||pair[0].quantity!==pair[1].quantity||pair[0].warehouseId===pair[1].warehouseId||pair[0].sourceId!==pair[1].sourceId)throw Error("调拨须成对、同SKU同数量且仓库不同");
+ if(pair[0].sourceId){
+ const origin=transfers[pair[0].sourceId];
+ if(!origin||reversedTransfers.has(pair[0].sourceId)||origin.some(function(m){return !!m.sourceId;}))throw Error("原调拨不存在或已经反向处理");
+ const before=origin.find(function(m){return m.action==="调拨出库";}),after=pair.find(function(m){return m.action==="调拨入库";});
+ if(before.skuId!==after.skuId||before.businessId!==after.businessId||before.quantity!==after.quantity||before.warehouseId!==after.warehouseId)throw Error("反向调拨必须匹配原调拨");
+ reversedTransfers.add(pair[0].sourceId);
+ }
+ });
+
+
+ const balances={};
+ d.movements.filter(function(m){return m.status==="已审核";}).slice().sort(function(a,b){return a.postedAt.localeCompare(b.postedAt);}).forEach(function(m){
+ const key=m.skuId+"|"+m.warehouseId;balances[key]=(balances[key]||0)+opsMoveSign(d,m)*m.quantity;
+ if(balances[key]<-0.00000001)throw Error("库存不足，不能产生负库存："+opsLabel(opsFind(d,supply,"skus",m.skuId)));
+ });
+ d.purchases.forEach(function(p){const n=opsReceived(d,p.id);if(n<-.00000001||n>p.quantity+.00000001)throw Error("采购净收货数量超出采购数量");if(p.status==="取消"&&n>0)throw Error("有未冲销收货记录的采购不可取消");});
+ d.orders.forEach(function(o){const shipped=opsShipped(d,o.id);if(shipped<-.00000001||shipped>o.quantity+.00000001)throw Error("销售净出库数量超出订单数量");if(o.status==="取消"&&shipped>0)throw Error("已有出库的订单不可直接取消");if(o.status==="已交付"&&shipped<o.quantity-.00000001)throw Error("尚未全部发货，不能标记已交付");
+ const physicalReturns=d.returns.filter(function(r){return r.orderId===o.id;}).reduce(function(n,r){return n+opsReturned(d,r.id);},0);if(physicalReturns>shipped+.00000001)throw Error("累计实物退回数量超出净发货数量");
+ });
+ d.returns.forEach(function(r){const o=opsFind(d,supply,"orders",r.orderId);if(r.currency!==o.currency)throw Error("售后币种须与原订单一致");if(r.quantity>opsShipped(d,o.id)+.00000001)throw Error("售后数量超出已发货数量");const returned=opsReturned(d,r.id);if(returned<-.00000001||returned>r.quantity+.00000001)throw Error("退货入库数量超出售后工单数量");});
+ if(!Array.isArray(input.logs)||input.logs.length>100000)throw Error("操作记录无效或超过容量");
+ d.logs=input.logs.map(function(r){return {id:String(r.id||""),at:String(r.at||""),kind:String(r.kind||""),entityId:String(r.entityId||""),action:String(r.action||""),detail:String(r.detail||"").slice(0,50000)};});
+ return d;
+}
+function opsPrepare(db,supply,kind,record,now,idFactory){
+ const def=OPS_SPEC.tables[kind];if(!def)throw Error("未知板块");
+ const next=cloneSupply(db),old=record.id?next[kind].find(function(r){return r.id===record.id;}):null;
+ if(record.id&&!old)throw Error("记录不存在，请刷新");
+ if(kind==="movements"&&old&&old.status==="已审核")throw Error("已审核流水不可修改，请使用冲销或反向调拨");
+ if(["purchases","offers"].includes(kind)&&record.supplierId){const s=opsFind(db,supply,"suppliers",record.supplierId);if(s&&s.status==="归档")throw Error("归档供应商不能用于新增或修改采购，请先恢复档案");}
+ const r={id:old?old.id:idFactory(def.code),createdAt:old?old.createdAt:now,updatedAt:now,postedAt:old?old.postedAt||"":""};
+ def.fields.forEach(function(f){r[f[0]]=record[f[0]]??"";});
+ if(["purchases","quotes","orders"].includes(kind)&&!r.documentNo)r.documentNo=r.id;
+ if(kind==="movements"&&r.status==="已审核"){r.postedAt=now;
+ const source=r.action==="销售出库"?opsFind(next,supply,"orders",r.sourceId):["采购入库","采购退货"].includes(r.action)?opsFind(next,supply,"purchases",r.sourceId):r.action==="退货入库"?opsFind(next,supply,"returns",r.sourceId):null;
+ if(source&&["取消","草稿","关闭"].includes(source.status))throw Error("来源单据状态不允许收发货");
+ if(r.action==="销售出库"&&source&&!["已收款","赊销","部分退款"].includes(source.paymentStatus))throw Error("请先核对收款状态，或明确记录为赊销");
+ }
+ if(old)next[kind][next[kind].indexOf(old)]=r;else next[kind].push(r);
+ next.revision=db.revision+1;next.logs.push({id:idFactory("LOG"),at:now,kind:kind,entityId:r.id,action:old?"编辑":"新增",detail:JSON.stringify({before:old||null,after:r})});
+ return opsValidate(next,supply);
+}
+function opsPersist(storage,before,next){
+ const raw=storage.getItem(OPS_KEY),current=raw?JSON.parse(raw):{revision:0};
+ if(current.revision!==before.revision)throw Error("另一窗口已更新业务数据，请刷新后再操作");
+ storage.setItem(OPS_KEY,JSON.stringify(next));return next;
+}
+function opsTransfer(db,supply,record,now,idFactory){
+ if(record.fromWarehouse===record.toWarehouse)throw Error("调出和调入仓库不能相同");
+ const next=cloneSupply(db),group=idFactory("TRF");
+ ["调拨出库","调拨入库"].forEach(function(action,i){next.movements.push({id:idFactory("MOV"),businessId:record.businessId,skuId:record.skuId,warehouseId:i?record.toWarehouse:record.fromWarehouse,action:action,quantity:Number(record.quantity),unit:record.unit,sourceId:record.sourceTransfer||"",supplierId:"",factoryId:"",batch:record.batch||"",status:"已审核",reversalOf:"",transferId:group,sourceURL:"",notes:record.notes||"库存调拨",createdAt:now,updatedAt:now,postedAt:now});});
+ next.revision=db.revision+1;next.logs.push({id:idFactory("LOG"),at:now,kind:"movements",entityId:group,action:"调拨",detail:JSON.stringify(record)});return opsValidate(next,supply);
+}
+function opsReverse(db,supply,movementId,now,idFactory){
+ const m=db.movements.find(function(x){return x.id===movementId;});
+ if(!m||m.status!=="已审核"||m.action==="冲销")throw Error("请选择未冲销的已审核原流水");
+ if(m.transferId){const pair=db.movements.filter(function(x){return x.transferId===m.transferId;});if(pair.length!==2)throw Error("调拨记录不完整");const out=pair.find(function(x){return x.action==="调拨出库";}),inbound=pair.find(function(x){return x.action==="调拨入库";});return opsTransfer(db,supply,{businessId:m.businessId,skuId:m.skuId,unit:m.unit,quantity:m.quantity,fromWarehouse:inbound.warehouseId,toWarehouse:out.warehouseId,batch:m.batch,notes:"反向调拨："+m.transferId,sourceTransfer:m.transferId},now,idFactory);}
+ return opsPrepare(db,supply,"movements",{...m,id:"",action:"冲销",reversalOf:m.id,status:"已审核",notes:"冲销原流水："+m.id},now,idFactory);
+}
+function opsImport(db,incoming,supply,now,idFactory){
+ incoming=opsValidate(incoming,supply);const next=cloneSupply(db);let added=0;
+ Object.keys(OPS_SPEC.tables).forEach(function(k){incoming[k].forEach(function(r){const old=next[k].find(function(x){return x.id===r.id;});if(old){if(JSON.stringify(old)!==JSON.stringify(r))throw Error("编号内容冲突："+r.id);}else{next[k].push(r);added++;}});});
+ const ids=new Set(next.logs.map(function(l){return l.id;}));incoming.logs.forEach(function(l){if(!ids.has(l.id)){next.logs.push(l);ids.add(l.id);}});
+ next.revision=db.revision+1;next.logs.push({id:idFactory("LOG"),at:now,kind:"system",entityId:"import",action:"导入",detail:"合并新增 "+added+" 条，不覆盖原记录"});return {data:opsValidate(next,supply),added:added};
+}
+
+
+
+
+let opsData=opsEmpty(true),opsReadError="",opsRaw="";
+try{opsRaw=workspaceStorage.getItem(OPS_KEY)||"";opsData=opsValidate(opsRaw?JSON.parse(opsRaw):opsData,supplyData);}catch(e){opsReadError="业务档案暂不可写："+e.message;}
+let opsTabs={},opsQuery="",opsStatus="",opsDraft={};
+function opsToday(){return new Date().toLocaleDateString("sv-SE",{timeZone:"Asia/Shanghai"});}
+function opsLiveSupply(){const raw=workspaceStorage.getItem(SUPPLY_KEY);return raw?validateSupply(JSON.parse(raw)):supplyData;}
+async function opsSave(kind,data){
+ if(opsReadError||supplyReadError)throw Error(opsReadError||supplyReadError);
+ const live=opsLiveSupply(),next=opsPrepare(opsData,live,kind,data,nowString(),supplyID);
+ opsData=await cloudPersistOps(workspaceStorage,opsData,next);supplyData=live;return next[kind].find(function(r){return r.id===(data.id||next[kind][next[kind].length-1].id);});
+}
+function opsCurrentTab(){const list=OPS_SPEC.map[state.page]||[];return opsTabs[state.page]||list[0];}
+function opsName(kind,id){return opsLabel(opsFind(opsData,supplyData,kind,id));}
+function opsRows(kind){return (opsData[kind]||[]).filter(function(r){return state.business==="all"||r.businessId===state.business;});}
+function opsValue(r,f){const v=r[f[0]];if(v===""||v==null)return "待补充";if(f[2]==="business")return businessName(v);if(f[2].startsWith("ref:"))return opsName(f[2].slice(4),v);if(f[2]==="number")return Number(v).toLocaleString("zh-CN",{maximumFractionDigits:4});return String(v);}
+const opsPreviousModulePage=modulePage;
+modulePage=function(){if(state.page==="A01")opsPreviousModulePage();else if(OPS_SPEC.map[state.page])opsRender();else opsPreviousModulePage();};
+const opsPreviousHome=home;
+home=function(){
+ opsPreviousHome();
+ document.querySelectorAll(".module-grid .card .status").forEach(function(el){el.textContent="云端可操作";});
+ const scope=state.business==="all"?"BUS-001":state.business;
+ const metricCards=document.querySelectorAll(".metrics .metric");
+ if(metricCards[0]&&(scope==="BUS-001"))metricCards[0].querySelector("p").textContent="云端登记已收款订单："+opsPaidOrders(opsData,scope,"淘宝")+" 单 · 非平台实时数据";
+ if(metricCards[1]&&(scope==="BUS-001"))metricCards[1].querySelector("p").textContent="云端登记已收款订单："+opsPaidOrders(opsData,scope,"Shopify")+" 单 · WhatsApp另计";
+ const next=document.querySelector(".next");if(next){next.innerHTML='<span class="module-icon" aria-hidden="true">📦</span><div><p class="eyebrow">WORKFLOW NEXT</p><h3>产品 → 采购 → 库存 → 订单</h3><p>统一编号，逐笔记录。各板块本地操作已接入，云端平台与Agent执行待连接。</p></div>'+navlink("A02","进入产品与规格 →","btn primary");}
+};
+const opsPreviousSettings=settings;
+settings=function(){
+ opsPreviousSettings();
+ document.getElementById("page").insertAdjacentHTML("afterbegin",'<section class="panel"><div class="section-title"><h2>全流程本地工作台 · v0.3</h2></div><p class="muted">供应链与全部业务板块使用同一浏览器档案容器。新增、查询、编辑、备份可本地执行；平台同步、云端登录和Agent自动操作尚未接入，浏览器验收尚未完成。</p><div class="resources"><button class="btn" id="open-global-backup">完整备份与恢复</button><button class="btn" id="open-global-audit">业务操作记录</button><button class="btn" id="open-data-checks">运行数据逻辑自检</button></div></section>');
+ document.getElementById("open-global-backup").onclick=function(){openOpsBackup();};
+ document.getElementById("open-global-audit").onclick=function(){openOpsAudit();};document.getElementById("open-data-checks").onclick=opsRunChecks;
+};
+function opsRender(){
+ const tabs=OPS_SPEC.map[state.page],kind=opsCurrentTab(),title=kind==="balance"?"库存查询":kind==="summary"?"经营总览":OPS_SPEC.tables[kind].label;
+ document.getElementById("page").innerHTML='<div class="ops-intro">'+esc(opsReadError||supplyReadError||"云端工作版：业务记录保存到账号；外部平台操作与Agent执行待接入。")+'</div><div class="ops-tabs" role="group" aria-label="板块功能">'+tabs.map(function(k){return '<button class="ops-tab '+(k===kind?"selected":"")+'" data-ops-tab="'+k+'" aria-pressed="'+(k===kind)+'">'+(k==="balance"?"库存查询":k==="summary"?"经营总览":OPS_SPEC.tables[k].label)+'</button>';}).join("")+'<button class="ops-tab" id="ops-handoff">助理交接包</button><button class="ops-tab" id="ops-backup">完整备份</button><button class="ops-tab" id="ops-audit">操作记录</button></div><div id="ops-body"></div>';
+ document.querySelectorAll("[data-ops-tab]").forEach(function(el){el.onclick=function(){opsTabs[state.page]=el.dataset.opsTab;opsQuery="";opsStatus="";opsRender();};});
+ document.getElementById("ops-backup").onclick=openOpsBackup;document.getElementById("ops-audit").onclick=openOpsAudit;document.getElementById("ops-handoff").onclick=openOpsHandoff;
+ if(kind==="balance")opsBalancePage();else if(kind==="summary")opsSummaryPage();else opsListPage(kind);
+}
+function opsListPage(kind){
+ const def=OPS_SPEC.tables[kind],st=def.fields.find(function(f){return f[0]==="status";});
+ document.getElementById("ops-body").innerHTML='<div class="ops-tools"><label class="search">⌕ <input id="ops-search" type="search" value="'+esc(opsQuery)+'" maxlength="100" placeholder="搜索名称、编号、单号或关联档案" aria-label="搜索'+def.label+'"></label>'+(st?'<select id="ops-state" aria-label="状态筛选"><option value="">全部状态</option>'+st[4].map(function(v){return optionHTML(v,v,opsStatus);}).join("")+'</select>':"")+'<button class="btn primary" id="ops-add" '+(opsReadError||supplyReadError?"disabled":"")+'>＋ 新增'+def.label+'</button>'+(kind==="movements"?'<button class="btn" id="ops-transfer">库存调拨</button>':"")+'</div><div id="ops-results"></div>';
+ document.getElementById("ops-search").oninput=function(e){opsQuery=e.target.value;opsListResults(kind);};
+ const stEl=document.getElementById("ops-state");if(stEl)stEl.onchange=function(e){opsStatus=e.target.value;opsListResults(kind);};
+ document.getElementById("ops-add").onclick=function(){opsEdit(kind);};
+ const transfer=document.getElementById("ops-transfer");if(transfer)transfer.onclick=openOpsTransfer;
+ opsListResults(kind);
+}
+function opsListResults(kind){
+ const def=OPS_SPEC.tables[kind],queryLower=opsQuery.trim().toLowerCase();
+ let rows=opsRows(kind).filter(function(r){return (!opsStatus||r.status===opsStatus)&&(!queryLower||[r.id,...def.fields.map(function(f){return opsValue(r,f);})].join(" ").toLowerCase().includes(queryLower));}).slice().reverse();
+ if(!rows.length){document.getElementById("ops-results").innerHTML='<div class="ops-list-empty"><h3>'+(opsQuery||opsStatus?"没有匹配的记录":"开始建立"+def.label)+'</h3><p>'+(kind==="movements"?"先建立SKU与仓库。期初或盘点必须写依据，收发货请关联对应单据。":"资料缺失可以后补；关联档案需先在对应板块建立，编号由系统生成。")+'</p><button class="btn" id="ops-empty-action">'+(opsQuery||opsStatus?"清除筛选":"新增第一条记录")+'</button></div>';document.getElementById("ops-empty-action").onclick=function(){if(opsQuery||opsStatus){opsQuery="";opsStatus="";opsListPage(kind);}else opsEdit(kind);};return;}
+ const visible=def.fields.filter(function(f){return !["textarea","url"].includes(f[2])&&!["businessId","notes","reversalOf","transferId","supplierId","factoryId"].includes(f[0]);}).slice(0,5);
+ document.getElementById("ops-results").innerHTML='<div class="table-scroll"><table class="supply-table ops-table"><thead><tr><th>编号／业务</th>'+visible.map(function(f){return '<th>'+esc(f[1])+'</th>';}).join("")+'<th>进度／金额</th><th>操作</th></tr></thead><tbody>'+rows.slice(0,300).map(function(r){return '<tr><td><span class="record-id">'+esc(r.id)+'</span><span class="subtle">'+esc(businessName(r.businessId))+'</span></td>'+visible.map(function(f){const value=opsValue(r,f);return '<td>'+esc(value.length>70?value.slice(0,70)+"…":value)+'</td>';}).join("")+'<td>'+opsComputedHTML(kind,r)+'</td><td><div class="ops-action-group"><button class="text-btn" data-ops-view="'+r.id+'">详情</button>'+(!(kind==="movements"&&r.status==="已审核")?'<button class="text-btn" data-ops-edit="'+r.id+'">编辑</button>':"")+opsActionButtons(kind,r)+'</div></td></tr>';}).join("")+'</tbody></table></div><div class="export-footer"><span>匹配 '+rows.length+' 条，最多显示300条；更多请缩小筛选。金额按币种分别查看。</span><button class="text-btn" id="ops-csv">导出筛选结果 CSV</button></div>';
+ document.querySelectorAll("[data-ops-view]").forEach(function(el){el.onclick=function(){opsView(kind,el.dataset.opsView);};});
+ document.querySelectorAll("[data-ops-edit]").forEach(function(el){el.onclick=function(){opsEdit(kind,el.dataset.opsEdit);};});
+ document.querySelectorAll("[data-ops-action]").forEach(function(el){el.onclick=function(){opsAction(kind,el.dataset.id,el.dataset.opsAction);};});
+ document.getElementById("ops-csv").onclick=function(){const fields=[["id","记录ID","text"],...def.fields,["createdAt","创建时间","text"],["updatedAt","更新时间","text"]];const csv="\uFEFF"+[fields.map(function(f){return f[1];}),...rows.map(function(r){return fields.map(function(f){return r[f[0]]==null?"":r[f[0]];});})].map(function(row){return row.map(csvValue).join(",");}).join("\r\n");downloadData("OPC-"+def.code+"-"+state.business+".csv",csv,"text/csv;charset=utf-8");};
+}
+function opsComputedHTML(kind,r){
+ if(["purchases","orders","quotes"].includes(kind)){let progress="";if(kind==="purchases")progress="净收货 "+opsReceived(opsData,r.id)+" / "+r.quantity+" "+r.unit;if(kind==="orders")progress="已发货 "+opsShipped(opsData,r.id)+" / "+r.quantity+" "+r.unit;return '<span class="ops-num">'+esc(r.currency+" "+opsLineTotal(r).toFixed(2))+'</span><br><small class="subtle">产品行金额'+(kind==="quotes"?"；运费另列":"")+'</small><br>'+esc(progress);}
+ if(kind==="returns")return '<span class="subtle">实物退回 '+opsReturned(opsData,r.id)+" / "+r.quantity+"</span>";
+ if(kind==="movements")return '<span class="ops-num">'+(r.status==="已审核"?(opsMoveSign(opsData,r)>0?"+":"−")+r.quantity+" "+esc(r.unit):"未计库存")+'</span>';
+ if(kind==="payments")return '<span class="ops-num">'+esc(r.currency+" "+r.amount)+'</span><br><small class="subtle">'+(r.status==="已确认"?"人民币收支："+(r.direction==="收"?"+":"−")+(r.amount*r.fx).toFixed(2):"未计现金汇总")+'</small>';
+ return r.status?statusTag(r.status):"—";
+}
+function opsActionButtons(kind,r){
+ function b(action,label){return '<button class="text-btn" data-ops-action="'+action+'" data-id="'+r.id+'">'+label+'</button>';}
+ if(kind==="purchases"&&r.status==="已下单")return b("receive","收货")+b("purchaseReturn","采购退货");
+ if(kind==="orders"&&r.status!=="取消")return b("ship","发货")+b("cash","收款登记");
+ if(kind==="returns"&&r.status!=="关闭")return b("restock","退回入库")+b("refund","退款登记");
+ if(kind==="leads")return b("quote","准备报价");
+ if(kind==="quotes")return b("toOrder","转订单")+b("quoteText","英文报价草稿");
+ if(kind==="content")return b("copyPost","复制发布包");
+ if(kind==="movements"&&r.status==="已审核"&&r.action!=="冲销"&&!opsData.movements.some(function(m){return m.reversalOf===r.id&&m.status==="已审核";}))return b("reverse",r.transferId?"反向调拨":"冲销");
+ return "";
+}
+function opsField(f,value,business,old){
+ const key=f[0],type=f[2],required=!!f[3],id="of-"+key;
+ let options=null;
+ if(type==="business")options=CONFIG.businesses.filter(function(b){return b[0]!=="all";});
+ if(type==="select")options=f[4];
+ if(type.startsWith("ref:")){
+ const kind=type.slice(4),all=kind==="suppliers"||kind==="factories"?supplyData[kind]:opsData[kind];
+ options=[["","请选择；没有则先建档"],...all.filter(function(r){return r.businessId===business&&(r.status!=="归档"||r.id===value);}).map(function(r){return [r.id,opsLabel(r)+(r.skuId?" · "+opsName("skus",r.skuId):"")];})];
+ }
+ if(key==="action")options=f[4].filter(function(a){return !["调拨入库","调拨出库","冲销"].includes(a)||a===value;});
+ let control=options?'<select id="'+id+'" name="'+key+'" '+(required?"required":"")+'>'+options.map(function(o){return optionHTML(Array.isArray(o)?o[0]:o,Array.isArray(o)?o[1]:o,value);}).join("")+'</select>':type==="textarea"?'<textarea id="'+id+'" name="'+key+'" maxlength="10000" '+(required?"required":"")+'>'+esc(value||"")+'</textarea>':'<input id="'+id+'" name="'+key+'" type="'+(["number","date","url","email","tel"].includes(type)?type:"text")+'" '+(type==="number"?'step="any" min="0"':"")+' value="'+esc(value==null?"":value)+'" '+(required?"required":"")+' maxlength="1000">';
+ return '<div class="form-field '+(type==="textarea"||type==="url"?"full":"")+'"><label for="'+id+'">'+esc(f[1])+(required?" *":"")+'</label>'+control+'</div>';
+}
+function opsEdit(kind,id,prefill){
+ if(opsReadError||supplyReadError){showToast(opsReadError||supplyReadError);return;}
+ const def=OPS_SPEC.tables[kind],old=id?opsData[kind].find(function(r){return r.id===id;}):null;
+ if(id&&!old){showToast("记录不存在");return;}
+ let record=old?cloneSupply(old):Object.assign({businessId:state.business==="all"?"BUS-001":state.business},prefill||{});
+ if(!old){def.fields.forEach(function(f){if(record[f[0]]==null){if(f[2]==="select")record[f[0]]=f[4][0];else record[f[0]]="";}});if(kind==="orders")record.orderDate=record.orderDate||opsToday();if(kind==="payments"){record.date=record.date||opsToday();record.fx=record.fx||1;}if(kind==="content")record.language=record.businessId==="BUS-001"?"英语":record.language;if(kind==="tasks")record.owner="我";if(kind==="products")record.parameterStatus="待提供";}
+ opsDraft=record;
+ function draw(){
+ openSupplyDialog('<h2>'+(old?"编辑":"新增")+esc(def.label)+'</h2><p class="form-help">* 必填。此操作只记录本地业务，不会向外部平台发送订单、付款或发布。'+(["purchases","orders","quotes"].includes(kind)?"同单多个SKU请使用相同单号逐行登记。":"")+'</p><form id="ops-form" class="ops-form"><div class="form-grid">'+def.fields.map(function(f){return opsField(f,record[f[0]],record.businessId,old);}).join("")+'</div>'+(['purchases','orders','quotes'].includes(kind)?'<div id="ops-line-total" class="ops-line-total"></div>':"")+'<div id="ops-form-error" class="form-error" role="alert"></div><div class="form-actions"><button type="button" class="btn" id="ops-cancel">取消</button><button type="submit" class="btn primary">保存记录</button></div></form>');
+ const form=document.getElementById("ops-form");
+ function capture(){def.fields.forEach(function(f){const el=form.elements[f[0]];record[f[0]]=f[2]==="number"?(el.value===""?"":Number(el.value)):el.value.trim();});}
+ document.getElementById("ops-cancel").onclick=function(){document.getElementById("dialog").close();};
+ form.elements.businessId.onchange=function(){capture();def.fields.filter(function(f){return f[2].startsWith("ref:");}).forEach(function(f){record[f[0]]="";});draw();};
+ if(form.elements.skuId)form.elements.skuId.addEventListener("change",function(){const sku=opsData.skus.find(function(s){return s.id===form.elements.skuId.value;});if(sku&&form.elements.unit)form.elements.unit.value=sku.unit;});
+ if(form.elements.currency&&form.elements.fx)form.elements.currency.addEventListener("change",function(){if(form.elements.currency.value==="CNY")form.elements.fx.value="1";});
+ const total=document.getElementById("ops-line-total");if(total){const update=function(){total.textContent="产品行金额："+Number(form.elements.quantity.value||0)*Number(form.elements.unitPrice.value||0)+" "+form.elements.currency.value+"（运费、税费等另行核实）";};form.elements.quantity.addEventListener("input",update);form.elements.unitPrice.addEventListener("input",update);form.elements.currency.addEventListener("change",update);update();}
+ form.onsubmit=async function(e){e.preventDefault();const button=form.querySelector('button[type="submit"]');button.disabled=true;try{capture();const saved=await opsSave(kind,record);document.getElementById("dialog").close();if(OPS_SPEC.map[state.page]?.includes(kind))opsTabs[state.page]=kind;opsRender();showToast("已保存云端记录："+saved.id);}catch(err){document.getElementById("ops-form-error").textContent=cleanError(err);button.disabled=false;}};
+ }
+ draw();
+}
+function opsView(kind,id){
+ const r=opsData[kind].find(function(x){return x.id===id;}),def=OPS_SPEC.tables[kind];if(!r)return;
+ const fields=def.fields.map(function(f){let value=opsValue(r,f);let html=esc(value);if(f[2]==="url"&&r[f[0]]&&checkURL(r[f[0]]))html='<a href="'+esc(r[f[0]])+'" target="_blank" rel="noopener noreferrer">'+esc(r[f[0]])+' ↗</a>';return '<div class="'+(["textarea","url"].includes(f[2])?"full":"")+'"><dt>'+esc(f[1])+'</dt><dd>'+html+'</dd></div>';}).join("");
+ openSupplyDialog('<h2>'+esc(def.label)+'详情</h2><p class="record-id">'+esc(r.id)+'</p><dl class="detail-meta">'+fields+'</dl><div class="ops-intro">'+opsComputedHTML(kind,r)+'</div><p class="subtle">更新时间：'+esc(displayTime(r.updatedAt))+'</p><div class="form-actions">'+(!(kind==="movements"&&r.status==="已审核")?'<button class="btn primary" id="ops-detail-edit">编辑记录</button>':"")+'</div>');
+ const edit=document.getElementById("ops-detail-edit");if(edit)edit.onclick=function(){opsEdit(kind,id);};
+}
+async function opsAction(kind,id,action){
+ const r=opsData[kind].find(function(x){return x.id===id;});if(!r)return;
+ try{
+ const base={businessId:r.businessId};
+ if(["receive","purchaseReturn","ship","restock"].includes(action)){
+ let qty,skuId,wh,supplierId="",factoryId="",a;
+ if(action==="receive"||action==="purchaseReturn"){qty=action==="receive"?r.quantity-opsReceived(opsData,id):opsReceived(opsData,id);skuId=r.skuId;wh=r.warehouseId;supplierId=r.supplierId;factoryId=r.factoryId;a=action==="receive"?"采购入库":"采购退货";}
+ if(action==="ship"){qty=r.quantity-opsShipped(opsData,id);skuId=r.skuId;wh=r.warehouseId;a="销售出库";}
+ if(action==="restock"){const o=opsData.orders.find(function(x){return x.id===r.orderId;});qty=r.quantity-opsReturned(opsData,id);skuId=o.skuId;wh=r.warehouseId;a="退货入库";}
+ if(qty<=0)throw Error("没有待处理数量");const sku=opsData.skus.find(function(s){return s.id===skuId;});
+ opsEdit("movements",null,{...base,skuId,warehouseId:wh,quantity:qty,unit:sku.unit,sourceId:id,supplierId,factoryId,action:a,status:"草稿"});return;
+ }
+ if(action==="quote"){opsEdit("quotes",null,{...base,customerId:r.customerId,leadId:r.id,skuId:r.skuId,quantity:r.quantity,unit:r.unit,currency:"USD",status:"草稿"});return;}
+ if(action==="toOrder"){opsEdit("orders",null,{...base,customerId:r.customerId,quoteId:r.id,skuId:r.skuId,quantity:r.quantity,unit:r.unit,unitPrice:r.unitPrice,currency:r.currency,status:"正常",paymentStatus:"未收款"});return;}
+ if(action==="cash"){opsEdit("payments",null,{...base,name:"订单收款登记："+r.documentNo,direction:"收",category:"销售收款",amount:opsLineTotal(r),currency:r.currency,fx:r.currency==="CNY"?1:"",sourceId:r.id,status:"待核实",notes:"默认金额仅为本订单行产品金额；请按实际到账核实，避免同单多行重复登记整单收款。"});return;}
+ if(action==="refund"){opsEdit("payments",null,{...base,name:"售后退款登记："+r.name,direction:"支",category:"客户退款",amount:r.refundAmount||"",currency:r.currency,fx:r.currency==="CNY"?1:"",sourceId:r.id,status:"待核实"});return;}
+ if(action==="reverse"){if(!confirm(r.transferId?"将生成新的反向调拨，保留原记录。继续？":"将新增冲销流水，保留原记录。继续？"))return;const next=opsReverse(opsData,opsLiveSupply(),r.id,nowString(),supplyID);opsData=await cloudPersistOps(workspaceStorage,opsData,next);opsRender();showToast("已记录反向操作");return;}
+ if(action==="quoteText"){
+ const customer=opsName("customers",r.customerId),sku=opsName("skus",r.skuId);
+ const text="QUOTATION "+r.documentNo+"\nCustomer: "+customer+"\nProduct / SKU: "+sku+"\nQuantity: "+r.quantity+" "+r.unit+"\nUnit price: "+r.currency+" "+r.unitPrice+"\nProduct subtotal: "+r.currency+" "+opsLineTotal(r).toFixed(2)+"\nFreight allocated to this line: "+(r.freight===""?"To be confirmed":r.currency+" "+r.freight)+"\nTrade terms: "+(r.terms||"To be confirmed")+"\nDestination: "+(r.destination||"To be confirmed")+"\nPayment terms: "+(r.paymentTerms||"To be confirmed")+"\nLead time: "+(r.leadTime||"To be confirmed")+"\nValidity: "+(r.validUntil||"To be confirmed")+"\nStatus: Draft for review; taxes and other charges require confirmation.";
+ opsTextDialog("英文报价草稿",text);return;
+ }
+ if(action==="copyPost"){opsTextDialog("发布包（不会自动发布）","Platform: "+r.platform+"\nLanguage: "+r.language+"\nCover: "+(r.coverText||"待补充")+"\n\n"+(r.caption||"待补充文案")+"\n\n"+r.tags+"\n\n计划日期："+r.plannedDate);return;}
+ }catch(e){showToast(cleanError(e));}
+}
+function opsTextDialog(title,text){
+ openSupplyDialog('<h2>'+esc(title)+'</h2><pre class="ops-digest" id="ops-copy-text">'+esc(text)+'</pre><div class="form-actions"><button class="btn primary" id="ops-copy">复制文本</button></div>');
+ document.getElementById("ops-copy").onclick=async function(){try{await navigator.clipboard.writeText(text);showToast("已复制");}catch(e){const range=document.createRange();range.selectNodeContents(document.getElementById("ops-copy-text"));const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);showToast("文本已选中，可使用复制快捷键");}};
+}
+function openOpsTransfer(){
+ if(opsReadError||supplyReadError){showToast(opsReadError||supplyReadError);return;}
+ const b=state.business==="all"?"BUS-001":state.business;
+ const fields=[["businessId","所属业务","business",true],["skuId","SKU","ref:skus",true],["fromWarehouse","调出仓库","ref:warehouses",true],["toWarehouse","调入仓库","ref:warehouses",true],["quantity","数量","number",true],["unit","单位","select",true,["kg","卷","件","个","包","双","套"]],["batch","批次号","text"],["notes","调拨说明","textarea"]];
+ let record={businessId:b};
+ function draw(){openSupplyDialog('<h2>库存调拨</h2><p class="form-help">两笔调拨流水一次保存，调出库存不足时全部不保存。</p><form id="ops-transfer-form"><div class="form-grid">'+fields.map(function(f){return opsField(f,record[f[0]]||"",record.businessId);}).join("")+'</div><div id="ops-transfer-error" class="form-error" role="alert"></div><div class="form-actions"><button class="btn primary" type="submit">审核并调拨</button></div></form>');const form=document.getElementById("ops-transfer-form");form.elements.businessId.onchange=function(){record={businessId:this.value};draw();};form.elements.skuId.onchange=function(){const s=opsData.skus.find(function(x){return x.id===this.value;},this);if(s)form.elements.unit.value=s.unit;};form.onsubmit=async function(e){e.preventDefault();try{fields.forEach(function(f){record[f[0]]=f[2]==="number"?Number(form.elements[f[0]].value):form.elements[f[0]].value;});const next=opsTransfer(opsData,opsLiveSupply(),record,nowString(),supplyID);opsData=await cloudPersistOps(workspaceStorage,opsData,next);document.getElementById("dialog").close();opsRender();showToast("两笔调拨已同时保存");}catch(err){document.getElementById("ops-transfer-error").textContent=cleanError(err);}};}
+ draw();
+}
+function opsBalancePage(){
+ const pairs=new Map();
+ opsData.movements.forEach(function(m){if(state.business==="all"||m.businessId===state.business)pairs.set(m.skuId+"|"+m.warehouseId,{skuId:m.skuId,warehouseId:m.warehouseId,businessId:m.businessId});});
+ const rows=Array.from(pairs.values());
+ document.getElementById("ops-body").innerHTML='<div class="panel"><h3>账面库存</h3><p class="muted">只汇总有效已审核流水；未录入期初盘点不能视为真实库存。不同单位、不同仓库分别记录。</p><div class="ops-links"><button class="btn" id="balance-opening">登记期初／盘点</button><button class="btn" id="balance-transfer">库存调拨</button></div></div><div class="table-scroll"><table class="supply-table"><thead><tr><th>业务</th><th>SKU</th><th>仓库</th><th>账面数量</th><th>单位</th></tr></thead><tbody>'+(rows.length?rows.map(function(r){const sku=opsData.skus.find(function(x){return x.id===r.skuId;});return '<tr><td>'+esc(businessName(r.businessId))+'</td><td>'+esc(opsName("skus",r.skuId))+'</td><td>'+esc(opsName("warehouses",r.warehouseId))+'</td><td class="ops-num">'+Number(opsBalance(opsData,r.skuId,r.warehouseId).toFixed(6))+'</td><td>'+esc(sku.unit)+'</td></tr>';}).join(""):'<tr><td colspan="5" class="empty-cell">尚无库存记录，请先建立SKU与仓库，再登记期初或采购收货。</td></tr>')+'</tbody></table></div>';
+ document.getElementById("balance-opening").onclick=function(){opsEdit("movements",null,{action:"期初入库",status:"草稿"});};document.getElementById("balance-transfer").onclick=openOpsTransfer;
+}
+function opsSummaryPage(){
+ const today=opsToday(),tasks=opsRows("tasks"),open=tasks.filter(function(t){return !["已完成","取消"].includes(t.status);}),overdue=open.filter(function(t){return t.dueDate&&t.dueDate<today;}),cash=opsCash(opsData,state.business),scope=state.business==="all"?"BUS-001":state.business;
+ const paidTB=opsPaidOrders(opsData,scope,"淘宝"),paidShop=opsPaidOrders(opsData,scope,"Shopify");
+ document.getElementById("ops-body").innerHTML='<div class="ops-summary"><article><small>云端登记已收款订单 · 全时间</small><strong>'+opsPaidOrders(opsData,state.business)+'</strong><small>按业务＋渠道＋订单号去重</small></article><article><small>已确认现金净流量 · 全时间</small><strong>¥'+cash.toFixed(2)+'</strong><small>不是利润，也不是银行账户余额</small></article><article><small>未完成任务</small><strong>'+open.length+'</strong><small>其中逾期 '+overdue.length+' 项（北京时间）</small></article></div><section class="panel"><div class="section-title"><h2>3D打印耗材 · 月目标</h2></div><p class="muted">以下按本地登记的订单日期统计本月订单，不代替平台实时月报。月目标待设置。</p><div class="ops-graph" id="ops-month-goals"></div></section><section class="panel"><h3>复盘检查</h3><ol class="steps"><li>先核对经营指标的起止日期、渠道和统计口径。</li><li>订单、支付买家与支付件数分别统计；WhatsApp不计入Shopify。</li><li>现金收支、费用和订单贡献利润分别核算，缺失成本不推算利润。</li><li>从异常生成下周任务，并明确下一步和截止日期。</li></ol><div class="ops-links"><button class="btn" id="summary-task">新增复盘行动</button><button class="btn" id="summary-metric">录入经营指标</button></div></section>';
+ const month=today.slice(0,7),temp=cloneSupply(opsData);temp.orders=temp.orders.filter(function(o){return o.orderDate.slice(0,7)===month;});
+ document.getElementById("ops-month-goals").innerHTML=[["淘宝",0],["Shopify",0]].map(function(pair){const n=opsPaidOrders(temp,"BUS-001",pair[0]);return '<div class="ops-progress"><span>'+pair[0]+'</span><progress value="'+Math.min(n,pair[1])+'" max="'+pair[1]+'"></progress><span>'+n+" / "+pair[1]+'</span></div>';}).join("");
+ document.getElementById("summary-task").onclick=function(){opsEdit("tasks",null,{module:"A11"});};document.getElementById("summary-metric").onclick=function(){opsEdit("metrics");};
+}
+function openOpsHandoff(){
+ const tabs=OPS_SPEC.map[state.page]||[],b=state.business;
+ const counts=tabs.filter(function(k){return OPS_SPEC.tables[k];}).map(function(k){return OPS_SPEC.tables[k].label+"："+opsRows(k).length+" 条";});
+ const pending=opsRows("tasks").filter(function(t){return t.module===state.page&&!["已完成","取消"].includes(t.status);});
+ opsTextDialog("助理交接包（可复制到对应聊天）","板块："+state.page+" "+title()+"\n业务："+businessName(b)+"\n统计时间："+displayTime(nowString())+"\n数据范围：当前浏览器本地档案，非平台实时数据。\n\n"+counts.join("\n")+"\n\n待办：\n"+(pending.length?pending.map(function(t){return "• "+t.name+"；下一步："+(t.nextAction||"待补充")+"；截止："+(t.dueDate||"待补充");}).join("\n"):"尚未登记本板块待办。")+"\n\n请根据已核实资料推进本板块，未知内容保持待确认。不要引用已撤回的参数手册；不要声称已执行未接通的外部操作。");
+}
+function openOpsAudit(){
+ const logs=opsData.logs.slice().reverse();
+ openSupplyDialog('<h2>业务操作记录</h2><p class="form-help">显示最近100条；全量记录保存在完整备份中。供应链操作记录在A01中查看。</p><div class="table-scroll"><table class="supply-table"><thead><tr><th>时间</th><th>动作</th><th>板块</th><th>编号</th><th>详情</th></tr></thead><tbody>'+(logs.length?logs.slice(0,100).map(function(l){return '<tr><td>'+esc(displayTime(l.at))+'</td><td>'+esc(l.action)+'</td><td>'+esc(OPS_SPEC.tables[l.kind]?.label||l.kind)+'</td><td>'+esc(l.entityId)+'</td><td><button class="text-btn" data-ops-log="'+esc(l.id)+'">查看</button></td></tr>';}).join(""):'<tr><td colspan="5">尚无业务操作记录。</td></tr>')+'</tbody></table></div>');
+ document.querySelectorAll("[data-ops-log]").forEach(function(el){el.onclick=function(){const l=logs.find(function(x){return x.id===el.dataset.opsLog;});opsTextDialog("操作详情",l.detail);};});
+}
+function openOpsBackup(){
+ openSupplyDialog('<h2>完整备份与恢复</h2><p class="form-help">包含四项业务的供应商、工厂及全部业务记录。换设备、文件升级前先导出。云端数据库与Google云盘备份分别管理。</p><div class="backup-grid"><section class="panel"><h3>导出完整备份</h3><p>稳定编号与操作记录一起保存。请确认下载成功后再迁移。</p><button class="btn primary" id="ops-full-export">导出全部 JSON</button></section><section class="panel"><h3>导入完整备份</h3><p>合并新增、保留既有编号；内容冲突则停止。供应链与业务记录一次写入同一个本地档案，避免半次导入。</p><input id="ops-full-file" type="file" accept=".json,application/json" aria-label="选择完整备份"><div id="ops-import-error" class="form-error" role="alert"></div></section></div><p class="local-note">v0.3全流程单独备份，请在A01「备份与迁移」中导入，再使用此处导出完整备份。此处不导入CSV。</p>');
+ document.getElementById("ops-full-export").onclick=function(){try{if(opsReadError||supplyReadError){downloadData("OPC-原始本地容器-"+opsToday()+".json",workspaceStorage.rawBackup());showToast("已导出原始容器，未用空白档案覆盖异常数据");return;}const live=opsLiveSupply();downloadData("OPC完整备份-"+opsToday()+".json",JSON.stringify({format:"opc.workspace.backup",version:1,exportedAt:nowString(),supply:live,operations:opsData},null,2));showToast("已发起完整备份下载，请确认文件保存成功");}catch(e){showToast(cleanError(e));}};
+ document.getElementById("ops-full-file").onchange=async function(e){
+ const file=e.target.files[0];if(!file)return;const error=document.getElementById("ops-import-error");try{if(opsReadError||supplyReadError)throw Error("当前档案异常，请先导出原始数据并修复后再恢复");
+ if(file.size>16*1024*1024)throw Error("备份超过16MB，请拆分或联系维护");
+ const p=JSON.parse(await file.text());if(p.format!=="opc.workspace.backup"||p.version!==1)throw Error("请选择本工作台导出的完整JSON备份");
+ const live=opsLiveSupply(),s=prepareSupplyImport(live,p.supply,nowString(),supplyID),o=opsImport(opsData,p.operations,s.data,nowString(),supplyID);
+ if(!confirm("将合并新增供应链档案 "+s.added+" 条，业务记录 "+o.added+" 条。请先备份当前数据。继续？")){e.target.value="";return;}
+ await workspaceStorage.commitBoth(live.revision,opsData.revision,s.data,o.data);supplyData=window.OPC_CLOUD.supply;opsData=window.OPC_CLOUD.operations;document.getElementById("dialog").close();shell();showToast("完整备份已合并保存");
+ }catch(err){error.textContent=cleanError(err);e.target.value="";}
+ };
+}
+window.addEventListener("storage",function(e){if(e.key==="opc.workspace.v1"){showToast("另一窗口更新了档案，请刷新后继续编辑");}});
+shell();
+
+
+
+
+function runOpsTests(api,createStorage){
+ const cloneSupply=v=>JSON.parse(JSON.stringify(v));const results=[];function check(name,fn){try{if(!fn())throw Error("返回false");results.push({name,passed:true});}catch(e){results.push({name,passed:false,error:e.message});}}function rejects(fn){try{fn();return false;}catch(e){return true;}}
+ let seq=0,clock=0;const id=p=>p+"-qa"+String(++seq).padStart(6,"0"),now=()=>new Date(Date.UTC(2026,10,3,0,0,++clock)).toISOString();
+ let s=api.emptySupply(),d=api.opsEmpty(false);
+ s=api.prepareSupplyChange(s,"suppliers",{name:"独立测试供应商",businessId:"BUS-001",status:"待核实",type:"工厂直供"},now(),id);const supplier=s.suppliers[0];
+ s=api.prepareSupplyChange(s,"factories",{name:"独立测试工厂",businessId:"BUS-001",status:"待核实"},now(),id);const factory=s.factories[0];
+ s=api.prepareSupplyChange(s,"links",{supplierId:supplier.id,factoryId:factory.id,status:"已核实"},now(),id);
+ function row(kind,input){const r={businessId:"BUS-001"};api.OPS_SPEC.tables[kind].fields.forEach(function(f){r[f[0]]=f[2]==="select"?f[4][0]:"";});return Object.assign(r,{businessId:"BUS-001"},input);}
+ function save(kind,input){d=api.opsPrepare(d,s,kind,row(kind,input),now(),id);return d[kind][d[kind].length-1];}
+ const product=save("products",{name:"测试PLA",model:"QA-PLA",parameterStatus:"待提供"});
+ const sku=save("skus",{name:"测试PLA黑色1卷",productId:product.id,unit:"卷"});
+ const whA=save("warehouses",{name:"测试仓库A"}),whB=save("warehouses",{name:"测试仓库B"});
+ const pur=save("purchases",{documentNo:"PO-QA",supplierId:supplier.id,factoryId:factory.id,skuId:sku.id,quantity:10,unit:"卷",unitPrice:10,currency:"CNY",warehouseId:whA.id,status:"已下单"});
+ check("产品与SKU关联建档",()=>d.skus[0].productId===product.id);
+ check("初始库存不造数",()=>api.opsBalance(d,sku.id,whA.id)===0);
+ const receipt=save("movements",{action:"采购入库",skuId:sku.id,warehouseId:whA.id,quantity:10,unit:"卷",sourceId:pur.id,supplierId:supplier.id,factoryId:factory.id,status:"已审核"});
+ check("采购收货关联供应商及工厂",()=>api.opsBalance(d,sku.id,whA.id)===10&&api.opsReceived(d,pur.id)===10);
+ check("采购超量收货阻断",()=>rejects(()=>api.opsPrepare(d,s,"movements",row("movements",{action:"采购入库",skuId:sku.id,warehouseId:whA.id,quantity:1,unit:"卷",sourceId:pur.id,supplierId:supplier.id,factoryId:factory.id,status:"已审核"}),now(),id)));
+ check("未审核不改变库存",()=>{const pending=api.opsPrepare(d,s,"movements",row("movements",{action:"盘盈",skuId:sku.id,warehouseId:whA.id,quantity:99,unit:"卷",status:"草稿",notes:"测试"}),now(),id);return api.opsBalance(pending,sku.id,whA.id)===10;});
+ const order=save("orders",{documentNo:"SO-QA",orderDate:"2026-11-03",channel:"Shopify",skuId:sku.id,quantity:4,unit:"卷",unitPrice:20,currency:"CNY",warehouseId:whA.id,paymentStatus:"已收款",status:"正常"});
+ const shipment=save("movements",{action:"销售出库",skuId:sku.id,warehouseId:whA.id,quantity:4,unit:"卷",sourceId:order.id,status:"已审核"});
+ check("销售出库扣减正确",()=>api.opsBalance(d,sku.id,whA.id)===6&&api.opsShipped(d,order.id)===4);
+ check("负库存阻断",()=>rejects(()=>api.opsPrepare(d,s,"movements",row("movements",{action:"盘亏",skuId:sku.id,warehouseId:whA.id,quantity:7,unit:"卷",status:"已审核",notes:"测试盘亏"}),now(),id)));
+ check("销售超量发货阻断",()=>rejects(()=>api.opsPrepare(d,s,"movements",row("movements",{action:"销售出库",skuId:sku.id,warehouseId:whA.id,quantity:1,unit:"卷",sourceId:order.id,status:"已审核"}),now(),id)));
+ check("SKU单位不一致阻断",()=>rejects(()=>api.opsPrepare(d,s,"movements",row("movements",{action:"盘盈",skuId:sku.id,warehouseId:whA.id,quantity:1,unit:"kg",status:"已审核",notes:"测试"}),now(),id)));
+ const ret=save("returns",{name:"测试售后",orderId:order.id,kind:"退货退款",quantity:2,reason:"独立测试",currency:"CNY",warehouseId:whA.id,status:"待退货"});
+ save("movements",{action:"退货入库",skuId:sku.id,warehouseId:whA.id,quantity:2,unit:"卷",sourceId:ret.id,status:"已审核"});
+ check("退货入库关联原订单",()=>api.opsBalance(d,sku.id,whA.id)===8&&api.opsReturned(d,ret.id)===2);
+ check("退货重复入库阻断",()=>rejects(()=>api.opsPrepare(d,s,"movements",row("movements",{action:"退货入库",skuId:sku.id,warehouseId:whA.id,quantity:1,unit:"卷",sourceId:ret.id,status:"已审核"}),now(),id)));
+ check("有实物退回后禁止直接冲销原发货",()=>rejects(()=>api.opsReverse(d,s,shipment.id,now(),id)));
+ const before=d;d=api.opsTransfer(d,s,{businessId:"BUS-001",skuId:sku.id,fromWarehouse:whA.id,toWarehouse:whB.id,quantity:3,unit:"卷"},now(),id);
+ check("调拨双笔同时保存",()=>api.opsBalance(d,sku.id,whA.id)===5&&api.opsBalance(d,sku.id,whB.id)===3&&d.movements.length===before.movements.length+2);
+ check("调拨超量全部阻断",()=>{const raw=JSON.stringify(d);const rejected=rejects(()=>api.opsTransfer(d,s,{businessId:"BUS-001",skuId:sku.id,fromWarehouse:whA.id,toWarehouse:whB.id,quantity:99,unit:"卷"},now(),id));return rejected&&JSON.stringify(d)===raw;});
+ const transferId=d.movements[d.movements.length-1].id;d=api.opsReverse(d,s,transferId,now(),id);
+ check("反向调拨恢复库存",()=>api.opsBalance(d,sku.id,whA.id)===8&&api.opsBalance(d,sku.id,whB.id)===0);
+ check("原调拨不允许重复反向处理",()=>rejects(()=>api.opsReverse(d,s,transferId,now(),id)));
+ check("已审核流水不可编辑",()=>rejects(()=>api.opsPrepare(d,s,"movements",{...receipt,quantity:9},now(),id)));
+ check("采购原收货不能冲销成负库存",()=>rejects(()=>api.opsReverse(d,s,receipt.id,now(),id)));
+ check("库存不足时不改变原始档案",()=>api.opsBalance(d,sku.id,whA.id)===8);
+ save("payments",{name:"测试收款",date:"2026-11-03",direction:"收",category:"销售收款",amount:80,currency:"CNY",fx:1,receiptRef:"QA-PAY-1",status:"已确认"});
+ save("payments",{name:"测试退款",date:"2026-11-03",direction:"支",category:"客户退款",amount:5,currency:"CNY",fx:1,status:"已确认"});
+ check("收支人民币方向与汇总正确",()=>api.opsCash(d,"BUS-001")===75);
+ check("重复支付流水号阻断",()=>rejects(()=>api.opsPrepare(d,s,"payments",row("payments",{name:"重复",date:"2026-11-03",direction:"收",amount:80,currency:"CNY",fx:1,receiptRef:"QA-PAY-1",status:"已确认"}),now(),id)));
+ check("未核实收款不计现金",()=>{const q=api.opsPrepare(d,s,"payments",row("payments",{name:"待确认",date:"2026-11-03",direction:"收",amount:100,currency:"USD",fx:7,status:"待核实"}),now(),id);return api.opsCash(q,"all")===75;});
+ check("人民币汇率必须为1",()=>rejects(()=>api.opsPrepare(d,s,"payments",row("payments",{name:"错汇率",date:"2026-11-03",direction:"收",amount:1,currency:"CNY",fx:7,status:"已确认"}),now(),id)));
+ const o2=save("orders",{documentNo:"SO-QA",orderDate:"2026-11-03",channel:"Shopify",skuId:sku.id,quantity:1,unit:"卷",unitPrice:20,currency:"CNY",warehouseId:whA.id,paymentStatus:"已收款",status:"正常"});
+ check("同订单多行只计一单",()=>api.opsPaidOrders(d,"BUS-001","Shopify")===1);
+ check("不是所有行收款则不算已收款整单",()=>{const q=api.opsPrepare(d,s,"orders",{...o2,paymentStatus:"未收款"},now(),id);return api.opsPaidOrders(q,"BUS-001","Shopify")===0;});
+ check("未发货不能标记交付",()=>rejects(()=>api.opsPrepare(d,s,"orders",{...o2,status:"已交付"},now(),id)));
+ check("非法日历日期阻断",()=>rejects(()=>api.opsPrepare(d,s,"orders",{...o2,orderDate:"2026-02-31"},now(),id)));
+ check("已核实参数必须有正式来源",()=>rejects(()=>api.opsPrepare(d,s,"products",{...product,parameterStatus:"已核实"},now(),id)));
+ check("撤回参数不被种子数据恢复",()=>api.opsEmpty(true).products.every(p=>p.parameterStatus==="待提供"&&!p.parameterURL));
+ const seed=api.opsValidate(api.opsEmpty(true),api.emptySupply());
+ check("云端首次启动不预置私人报价或采购成本",()=>seed.salesPrices.length===0&&seed.offers.length===0);
+ const restored=api.opsImport(api.opsEmpty(false),d,s,now(),id);
+ check("完整业务备份恢复库存与关联",()=>api.opsBalance(restored.data,sku.id,whA.id)===8&&restored.data.orders.length===2);
+ check("重复导入不新增重复记录",()=>api.opsImport(restored.data,d,s,now(),id).added===0);
+ const changed=cloneSupply(d);changed.products[0].name="不同名称";
+ check("备份编号冲突不覆盖",()=>rejects(()=>api.opsImport(d,changed,s,now(),id)));
+ const map=new Map(),native={getItem:k=>map.get(k)||null,setItem:(k,v)=>map.set(k,v),removeItem:k=>map.delete(k)};
+ native.setItem("opc.supply.v1",JSON.stringify(s));native.setItem("opc.operations.v1",JSON.stringify(d));
+ const storage=createStorage(native);
+ check("兼容读取v0.2旧供应链及业务数据",()=>JSON.parse(storage.getItem("opc.supply.v1")).suppliers[0].id===supplier.id);
+ const beforeNative=JSON.stringify(Array.from(map.entries()));
+ check("跨窗口修订冲突阻断",()=>rejects(()=>api.opsPersist(storage,api.opsEmpty(false),d))&&beforeNative===JSON.stringify(Array.from(map.entries())));
+ const nextOps=cloneSupply(d);nextOps.revision++;const nextSupply=cloneSupply(s);nextSupply.revision++;
+ storage.commitBoth(s.revision,d.revision,nextSupply,nextOps);
+ check("供应链与业务完整恢复一次写入",()=>JSON.parse(storage.getItem("opc.supply.v1")).revision===nextSupply.revision&&JSON.parse(storage.getItem("opc.operations.v1")).revision===nextOps.revision);
+ const currentMain=native.getItem("opc.workspace.v1"),failNative={getItem:native.getItem,removeItem:native.removeItem,setItem:()=>{throw Error("quota");}};
+ check("完整恢复保存失败不产生半次导入",()=>rejects(()=>createStorage(failNative).commitBoth(nextSupply.revision,nextOps.revision,nextSupply,nextOps))&&native.getItem("opc.workspace.v1")===currentMain);
+ return results;
+}
+
+
+
+
+function opsRunChecks(){
+ const api={OPS_SPEC,opsEmpty,opsValidate,opsPrepare,opsTransfer,opsReverse,opsPersist,opsImport,opsBalance,opsReceived,opsShipped,opsReturned,opsPaidOrders,opsCash,emptySupply,prepareSupplyChange,prepareSupplyImport,validateSupply};
+ const results=runOpsTests(api,createWorkspaceStorage),passed=results.filter(function(r){return r.passed;}).length;
+ openSupplyDialog('<h2>数据逻辑自检：'+passed+' / '+results.length+'</h2><p class="form-help">测试只使用独立内存数据，不写入你的供应商、订单或库存。此检查不代替真实浏览器点击与视觉验收。</p><ol class="steps">'+results.map(function(r){return '<li>'+esc((r.passed?"通过 · ":"失败 · ")+r.name+(r.error?"："+r.error:""))+'</li>';}).join("")+'</ol>');
+}
+
+
+
+function availableWorkspaceStorage(){
+ const memory=new Map();let native;try{native=window.localStorage;}catch{}
+ const view={getItem:k=>{try{return native?native.getItem(k):memory.get(k)||null;}catch{return memory.get(k)||null;}},setItem:(k,v)=>{try{if(native)native.setItem(k,v);else memory.set(k,v);}catch{memory.set(k,v);}},removeItem:k=>{try{if(native)native.removeItem(k);else memory.delete(k);}catch{memory.delete(k);}}};
+ return {getItem:function(k){if(k==="opc.supply.v1")return JSON.stringify(window.OPC_CLOUD.supply);if(k==="opc.operations.v1")return JSON.stringify(window.OPC_CLOUD.operations);return view.getItem(k);},
+ setItem:function(k,v){if(k==="opc.supply.v1"||k==="opc.operations.v1")throw Error("云端写入需等待服务器确认");return view.setItem(k,v);},
+ removeItem:function(k){if(k==="opc.supply.v1"||k==="opc.operations.v1")throw Error("不能删除云端业务数据");return view.removeItem(k);},
+ commitBoth:async function(srev,orev,supply,operations){if(srev!==window.OPC_CLOUD.supply.revision||orev!==window.OPC_CLOUD.operations.revision)throw Error("档案已更新，请刷新");await cloudWrite(supply,operations);},
+ rawBackup:()=>JSON.stringify({format:"opc.workspace.backup",version:1,supply:window.OPC_CLOUD.supply,operations:window.OPC_CLOUD.operations})};
+}
+async function cloudPersistSupply(storage,before,next){if(before.revision!==window.OPC_CLOUD.supply.revision)throw Error("供应链已更新，请刷新");return (await cloudWrite(next,window.OPC_CLOUD.operations)).supply;}
+async function cloudPersistOps(storage,before,next){if(before.revision!==window.OPC_CLOUD.operations.revision)throw Error("业务记录已更新，请刷新");return (await cloudWrite(window.OPC_CLOUD.supply,next)).operations;}
+async function cloudWrite(supply,operations){
+ if(window.OPC_CLOUD_BUSY)throw Error("上一笔保存尚未完成，请稍后重试");
+ window.OPC_CLOUD_BUSY=true;cloudStatus("正在保存到云端…");
+ try{
+ const requestId=crypto.randomUUID();
+ const r=await fetch("/api/workspace",{method:"PUT",credentials:"same-origin",headers:{"content-type":"application/json"},body:JSON.stringify({requestId,expectedRevision:window.OPC_CLOUD.revision,supply,operations})});
+ const result=await r.json();if(!r.ok)throw Error(result.error||"云端保存失败");
+ window.OPC_CLOUD=result;cloudApply(result);cloudStatus("已保存到云端");return result;
+ }catch(e){cloudStatus("保存失败；表单内容保留");throw e;}finally{window.OPC_CLOUD_BUSY=false;}
+}
+function cloudApply(snapshot){window.OPC_CLOUD=snapshot;supplyData=validateSupply(snapshot.supply);opsData=opsValidate(snapshot.operations,supplyData);}
+function cloudStatus(text){const el=document.getElementById("cloud-status");if(el)el.textContent=text;}
+async function cloudRefresh(manual){
+ if(window.OPC_CLOUD_BUSY||document.getElementById("dialog")?.open)return;
+ try{const r=await fetch("/api/workspace?since="+window.OPC_CLOUD.revision,{credentials:"same-origin",cache:"no-store"});if(r.status===304){if(manual)cloudStatus("已是最新数据");return;}const value=await r.json();if(!r.ok)throw Error(value.error||"同步失败");cloudApply(value);shell();cloudStatus("已读取其他设备更新");}
+ catch(e){cloudStatus(e.message);if(manual)showToast(e.message);}
+}
+const cloudOriginalShell=shell;
+shell=function(){
+ cloudOriginalShell();
+ document.querySelectorAll('a[href^="#gid="]').forEach(function(a){a.remove();});
+ const header=document.querySelector(".top-right");
+ if(header){header.innerHTML='<span id="cloud-status" role="status">云端已连接</span><button class="btn" id="cloud-refresh">同步</button><button class="btn" id="cloud-signout">退出</button>';
+ document.getElementById("cloud-refresh").onclick=()=>cloudRefresh(true);
+ document.getElementById("cloud-signout").onclick=async()=>{if(window.OPC_CLOUD_BUSY)return;try{const r=await fetch("/api/logout",{method:"POST",headers:{"content-type":"application/json"},body:"{}"});if(!r.ok)throw Error("退出失败");location.href="/login";}catch(e){showToast(e.message);}};}
+ const footer=document.querySelector("footer");if(footer)footer.innerHTML='OPC CLOUD · v0.4 <span>登录后云端保存 · 另一设备更新可点击同步</span>';
+};
+
+new MutationObserver(()=>{
+ document.querySelectorAll('table.supply-table').forEach(table=>{
+ const labels=Array.from(table.querySelectorAll('thead th')).map(th=>th.textContent);
+ table.querySelectorAll('tbody tr').forEach(tr=>Array.from(tr.children).forEach((td,i)=>td.setAttribute('data-label',labels[i]||'')));
+ });
+}).observe(document.getElementById('app'),{childList:true,subtree:true});
+setInterval(()=>{if(document.visibilityState==="visible")cloudRefresh(false);},15000);
+window.addEventListener("focus",()=>cloudRefresh(false));
+shell();
+
+</script>
+</body>
+</html>

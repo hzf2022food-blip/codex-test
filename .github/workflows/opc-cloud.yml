@@ -1,0 +1,42 @@
+
+name: OPC cloud checks
+on:
+  push:
+    branches: [codex/opc-cloud]
+    paths: ['opc-workspace/**', '.github/workflows/opc-cloud.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: opc_ci
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: isolated_ci_only
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres -d opc_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 15
+    env:
+      DATABASE_URL: postgres://postgres:isolated_ci_only@127.0.0.1:5432/opc_ci
+      DATABASE_SSL: disable
+      NODE_ENV: test
+    defaults:
+      run:
+        working-directory: opc-workspace
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --include=dev --no-audit --no-fund
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
