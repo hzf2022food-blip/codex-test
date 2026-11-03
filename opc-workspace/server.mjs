@@ -97,7 +97,7 @@ export async function createApplication(options={}){
    let next;try{next=validateChange(before,body);}catch(e){throw e.status?e:new HttpError(422,e.message);}
    const revision=Number(w.revision)+1;
    for(const [group,data] of Object.entries(next)){
-    for(const kind of Object.keys(data).filter(k=>Array.isArray(data[kind]))){
+    for(const kind of Object.keys(data).filter(k=>Array.isArray(data[k]))){
      const old=new Map(before[group][kind].map(x=>[x.id,x]));
      for(const record of data[kind]){
       const previous=old.get(record.id);if(previous&&stable(previous)===stable(record))continue;
