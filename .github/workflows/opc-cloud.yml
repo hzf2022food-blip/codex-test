@@ -40,3 +40,8 @@ jobs:
       - run: npm test
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
+      - name: Verify deployed mobile entry
+        if: github.ref == 'refs/heads/main'
+        env:
+          OPC_PUBLIC_URL: https://opc-workspace.onrender.com
+        run: node scripts/check-live-mobile.mjs
