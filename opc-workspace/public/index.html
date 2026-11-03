@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#173436">
-<meta name="description" content="OPC一人公司统一工作台，本地试用版。">
-<title>OPC工作台 · 全流程本地业务版</title>
+<meta name="description" content="OPC云端工作台，电脑与手机同步管理任务和业务资料。">
+<title>OPC工作台 · 云端业务版</title>
 <style>
 
 
@@ -55,6 +55,15 @@
  .supply-table .record-id{font-size:10px;max-width:none}.ops-action-group{min-width:0}.ops-action-group button{flex:1}
 }
 </style>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="OPC工作台">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="/mobile.css">
+<script src="/mobile.js" defer></script>
 </head>
 <body>
 <div id="app"></div>
@@ -973,7 +982,7 @@ shell=function(){
  if(header){header.innerHTML='<span id="cloud-status" role="status">云端已连接</span><button class="btn" id="cloud-refresh">同步</button><button class="btn" id="cloud-signout">退出</button>';
  document.getElementById("cloud-refresh").onclick=()=>cloudRefresh(true);
  document.getElementById("cloud-signout").onclick=async()=>{if(window.OPC_CLOUD_BUSY)return;try{const r=await fetch("/api/logout",{method:"POST",headers:{"content-type":"application/json"},body:"{}"});if(!r.ok)throw Error("退出失败");location.href="/login";}catch(e){showToast(e.message);}};}
- const footer=document.querySelector("footer");if(footer)footer.innerHTML='OPC CLOUD · v0.4 <span>登录后云端保存 · 另一设备更新可点击同步</span>';
+ const footer=document.querySelector("footer");if(footer)footer.innerHTML='OPC CLOUD · v0.4.1 <span>登录后云端保存 · 另一设备更新可点击同步</span>';
 };
 
 new MutationObserver(()=>{

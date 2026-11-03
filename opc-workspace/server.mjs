@@ -4,10 +4,19 @@ import {readFile} from 'node:fs/promises';
 import {randomBytes, randomUUID, createHash, scryptSync, timingSafeEqual} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {Pool} from 'pg';
+import {appIcon} from './mobile-icons.mjs';
 import {emptySupply, validateSupply, opsEmpty, opsValidate, OPS_SPEC} from './domain.mjs';
 
 const ROOT=new URL('.',import.meta.url);
 const MAX_BODY=20*1024*1024;
+const MOBILE_FILES={
+ '/manifest.webmanifest':['public/manifest.webmanifest','application/manifest+json; charset=utf-8'],
+ '/sw.js':['public/sw.js','application/javascript; charset=utf-8'],
+ '/mobile.js':['public/mobile.js','application/javascript; charset=utf-8'],
+ '/mobile.css':['public/mobile.css','text/css; charset=utf-8']
+};
+const MOBILE_ICONS={'/icons/icon-192.png':192,'/icons/icon-512.png':512,'/icons/apple-touch-icon.png':180};
+const iconBuffers=new Map(Object.values(MOBILE_ICONS).map(size=>[size,appIcon(size)]));
 function canonical(d){for(const key of Object.keys(d))if(Array.isArray(d[key]))d[key].sort((a,b)=>String(a.createdAt||a.at||'').localeCompare(String(b.createdAt||b.at||''))||a.id.localeCompare(b.id));return d;}
 const sha=v=>createHash('sha256').update(v).digest('hex');
 const stable=v=>v===null||typeof v!=='object'?JSON.stringify(v):Array.isArray(v)?'['+v.map(stable).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',')+'}';
@@ -120,7 +129,15 @@ export async function createApplication(options={}){
   res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
   try{
    const path=new URL(req.url,'http://localhost').pathname;
-   if(path==='/health'&&req.method==='GET'){await pool.query('SELECT 1');return json(res,200,{status:'ok',version:'0.4.0'});}
+   if(req.method==='GET'&&Object.hasOwn(MOBILE_FILES,path)){
+    const [file,type]=MOBILE_FILES[path];
+    if(path==='/sw.js')res.setHeader('Service-Worker-Allowed','/');
+    res.writeHead(200,{'content-type':type});return res.end(await readFile(new URL(file,ROOT)));
+   }
+   if(req.method==='GET'&&Object.hasOwn(MOBILE_ICONS,path)){
+    res.writeHead(200,{'content-type':'image/png'});return res.end(iconBuffers.get(MOBILE_ICONS[path]));
+   }
+   if(path==='/health'&&req.method==='GET'){await pool.query('SELECT 1');return json(res,200,{status:'ok',version:'0.4.1'});}
    if(req.method==='POST'||req.method==='PUT')checkOrigin(req);
    if(path==='/api/login'&&req.method==='POST'){
     const body=await readJSON(req),key=req.socket.remoteAddress||'unknown',now=Date.now();let a=attempts.get(key);

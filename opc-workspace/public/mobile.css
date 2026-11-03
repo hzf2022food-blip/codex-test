@@ -1,0 +1,12 @@
+
+.phone-entry-launch{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:35;display:none;align-items:center;gap:8px;min-height:48px;border:1px solid #bed5ca;border-radius:24px;padding:10px 18px;background:#173436;color:#fff;box-shadow:0 4px 18px #17343633;font:14px system-ui;cursor:pointer}
+.phone-entry-launch[hidden]{display:none!important}
+.mobile-install-dialog{width:calc(100% - 32px);max-width:420px;max-height:80dvh;overflow:auto;box-sizing:border-box;padding:24px;border:1px solid #dbe5df;border-radius:16px;background:white;color:#173436;font:15px/1.7 system-ui}
+.mobile-install-dialog::backdrop{background:#17343688}
+.mobile-install-dialog h2{font-size:22px;margin:0 0 12px}
+.mobile-install-dialog ol{padding-left:24px}
+.mobile-install-dialog li{margin:10px 0}
+.mobile-install-dialog p{font-size:14px;color:#50675b}
+.mobile-install-dialog button{width:100%;min-height:44px;padding:10px 16px;border:0;border-radius:8px;background:#173436;color:white;font:15px system-ui;cursor:pointer}
+@media(max-width:800px){body{padding-bottom:calc(80px + env(safe-area-inset-bottom,0px))}.phone-entry-launch{display:flex}.topbar{padding-top:env(safe-area-inset-top,0px)}dialog.supply-dialog{max-height:calc(100dvh - 32px);overflow:auto}}
+@media(display-mode:standalone){body{padding-top:env(safe-area-inset-top,0px)}.topbar{padding-top:0}.phone-entry-launch{display:none!important}}
