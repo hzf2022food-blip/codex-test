@@ -13,7 +13,7 @@ test('Excel/CSV import, preview, backup, duplicates, conflicts, references and m
   await signIn(page);await open(page);
   const template=page.waitForEvent('download');await page.getByRole('link',{name:'下载当前类型模板'}).click();expect((await template).suggestedFilename()).toContain('.xlsx');
   const content='公司名称,联系电话,备注\n'+name+',001234,浏览器测试';
-  await csv(page,content.replace('公司名称,联系电话','自有名称,联络号码'));await page.locator('#ti-map-name').selectOption('0');await page.locator('#ti-mapping details summary').click();await page.locator('#ti-map-phone').selectOption('1');await expect(page.locator('#ti-map-name')).toHaveValue('0');await preview(page);await expect(page.locator('#ti-message')).toContainText('新增 1 条');
+  await csv(page,content.replace('公司名称,联系电话','自有名称,联络号码'));await page.locator('#ti-map-name').selectOption('0');await page.locator('#ti-mapping details summary').click();await page.locator('#ti-map-phone').selectOption('1');await expect(page.locator('#ti-map-name')).toHaveValue('0');await preview(page);await expect(page.locator('#ti-message')).toContainText('新增 1 条');await expect(page.locator('#ti-error-export')).not.toBeVisible();
   const before=await (await page.request.get('/api/workspace')).json();expect(before.supply.suppliers.some(r=>r.name===name)).toBe(false);
   const backup=page.waitForEvent('download');await page.getByRole('button',{name:'导出导入前备份'}).click();expect((await backup).suggestedFilename()).toContain('.json');
   await page.getByRole('button',{name:'确认导入到云端'}).click();await expect(page.locator('#table-import-dialog')).not.toBeVisible();

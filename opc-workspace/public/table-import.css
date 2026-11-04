@@ -13,3 +13,5 @@
 .ti-head{position:sticky;top:-24px;padding-top:12px;background:white;z-index:2}
 .ti-actions{position:sticky;bottom:-24px;z-index:2;background:white;border-top:1px solid #dbe5df;padding:12px 0}
 @media(max-width:600px){.ti-head{top:-18px}.ti-actions{bottom:-18px}}
+
+.table-import-dialog [hidden]{display:none!important}
