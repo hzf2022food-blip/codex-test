@@ -5,11 +5,14 @@ import {randomBytes, randomUUID, createHash, scryptSync, timingSafeEqual} from '
 import {fileURLToPath} from 'node:url';
 import {Pool} from 'pg';
 import {appIcon} from './mobile-icons.mjs';
+import {IMPORT_SCHEMA,BUSINESSES,readTable,detectMapping,prepareTableImport,templateWorkbook} from './table-import.mjs';
 import {emptySupply, validateSupply, opsEmpty, opsValidate, OPS_SPEC} from './domain.mjs';
 
 const ROOT=new URL('.',import.meta.url);
 const MAX_BODY=20*1024*1024;
 const MOBILE_FILES={
+ '/table-import.js':['public/table-import.js','application/javascript; charset=utf-8'],
+ '/table-import.css':['public/table-import.css','text/css; charset=utf-8'],
  '/manifest.webmanifest':['public/manifest.webmanifest','application/manifest+json; charset=utf-8'],
  '/sw.js':['public/sw.js','application/javascript; charset=utf-8'],
  '/mobile.js':['public/mobile.js','application/javascript; charset=utf-8'],
@@ -137,7 +140,7 @@ export async function createApplication(options={}){
    if(req.method==='GET'&&Object.hasOwn(MOBILE_ICONS,path)){
     res.writeHead(200,{'content-type':'image/png'});return res.end(iconBuffers.get(MOBILE_ICONS[path]));
    }
-   if(path==='/health'&&req.method==='GET'){await pool.query('SELECT 1');return json(res,200,{status:'ok',version:'0.4.2'});}
+   if(path==='/health'&&req.method==='GET'){await pool.query('SELECT 1');return json(res,200,{status:'ok',version:'0.5.0'});}
    if(req.method==='POST'||req.method==='PUT')checkOrigin(req);
    if(path==='/api/login'&&req.method==='POST'){
     const body=await readJSON(req),key=req.socket.remoteAddress||'unknown',now=Date.now();let a=attempts.get(key);
@@ -153,6 +156,50 @@ export async function createApplication(options={}){
    const authed=await authenticated(req);
    if(path==='/login'&&req.method==='GET'){if(authed){res.writeHead(303,{location:'/'});return res.end();}res.writeHead(200,{'content-type':'text/html; charset=utf-8'});return res.end(loginPage);}
    if(!authed){if(path.startsWith('/api/'))throw new HttpError(401,'登录已过期，请重新登录');res.writeHead(303,{location:'/login'});return res.end();}
+
+   if(path==='/api/import/schema'&&req.method==='GET')return json(res,200,{kinds:IMPORT_SCHEMA,businesses:BUSINESSES,limits:{rows:1000,fileMB:5}});
+   if(path==='/api/import/template'&&req.method==='GET'){
+    const kind=new URL(req.url,'http://localhost').searchParams.get('kind');
+    const file=await templateWorkbook(kind);
+    res.writeHead(200,{'content-type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','content-disposition':'attachment; filename="opc-'+kind+'-template.xlsx"'});return res.end(file);
+   }
+   if(path==='/api/import/inspect'&&req.method==='POST'){
+    const body=await readJSON(req),table=await readTable(body);
+    return json(res,200,{sheets:table.sheets,sheet:table.sheet,headers:table.headers,total:table.rows.length,samples:table.rows.slice(0,3),mapping:detectMapping(table.headers,body.kind)});
+   }
+   if(path==='/api/import/preview'&&req.method==='POST'){
+    const body=await readJSON(req),table=await readTable(body);
+    const preview=await tx(login,async db=>{
+     const w=await workspace(db,true),before=await snapshot(db,w);
+     const prepared=prepareTableImport(before.supply,table,body);
+     let previewId=null;
+     if(prepared.canCommit){
+      previewId=randomUUID();
+      await db.query("DELETE FROM opc_import_previews WHERE workspace_id=$1 AND (expires_at<now() OR id NOT IN (SELECT id FROM opc_import_previews WHERE workspace_id=$1 ORDER BY created_at DESC LIMIT 4))",[w.id]);
+      await db.query('INSERT INTO opc_import_previews(id,workspace_id,expected_revision,plan) VALUES($1,$2,$3,$4)',[previewId,w.id,before.revision,JSON.stringify({kind:prepared.kind,records:prepared.records,log:prepared.log,summary:prepared.summary})]);
+     }
+     return {previewId,revision:before.revision,summary:prepared.summary,results:prepared.results,expiresMinutes:20};
+    });
+    return json(res,200,preview);
+   }
+   if(path==='/api/import/commit'&&req.method==='POST'){
+    const body=await readJSON(req);if(!/^[a-f0-9-]{36}$/.test(String(body.previewId||'')))throw new HttpError(400,'请先预览表格');
+    const pending=await tx(login,async db=>{
+     const w=await workspace(db,true);
+     const r=await db.query('SELECT * FROM opc_import_previews WHERE id=$1 AND workspace_id=$2 AND expires_at>now()',[body.previewId,w.id]);
+     if(!r.rowCount)throw new HttpError(404,'预览已过期或不存在，请重新预览');
+     const replay=await db.query('SELECT request_id FROM opc_requests WHERE workspace_id=$1 AND request_id=$2',[w.id,'import-'+body.previewId]);
+     return {row:r.rows[0],current:await snapshot(db,w),replayed:replay.rowCount>0};
+    });
+    const {row,current}=pending,plan=row.plan;
+    const supply=JSON.parse(JSON.stringify(current.supply)),requestId='import-'+body.previewId;
+    if(pending.replayed)return json(res,200,{...current,replayed:true,importSummary:plan.summary});
+    if(current.revision!==Number(row.expected_revision))throw new HttpError(409,'预览后其他设备修改了数据，请重新预览表格');
+    supply[plan.kind].push(...plan.records);supply.logs.push(plan.log);supply.revision++;
+    const saved=await saveSnapshot({requestId,expectedRevision:Number(row.expected_revision),supply,operations:current.operations});
+    return json(res,200,{...saved,importSummary:plan.summary});
+   }
+
    if(path==='/api/logout'&&req.method==='POST'){await pool.query('DELETE FROM opc_sessions WHERE token_hash=$1',[sha(cookie(req,cookieName))]);return json(res,200,{ok:true},{'set-cookie':cookieName+'=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'+(production?'; Secure':'')});}
    if(path==='/api/workspace'&&req.method==='GET'){
     const current=await tx(login,async db=>{const w=await workspace(db,true);if(new URL(req.url,'http://localhost').searchParams.get('since')===String(w.revision))return null;return snapshot(db,w);});

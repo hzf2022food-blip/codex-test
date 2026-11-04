@@ -48,4 +48,18 @@ CREATE POLICY opc_request_owner ON opc_requests USING(EXISTS(SELECT 1 FROM opc_w
 DROP POLICY IF EXISTS opc_audit_owner ON opc_audit;
 CREATE POLICY opc_audit_owner ON opc_audit USING(EXISTS(SELECT 1 FROM opc_workspaces w WHERE w.id=workspace_id AND w.owner_subject=current_setting('app.user_sub',true))) WITH CHECK(EXISTS(SELECT 1 FROM opc_workspaces w WHERE w.id=workspace_id AND w.owner_subject=current_setting('app.user_sub',true)));
 
+
+CREATE TABLE IF NOT EXISTS opc_import_previews (
+ id uuid PRIMARY KEY,workspace_id uuid NOT NULL REFERENCES opc_workspaces(id),
+ expected_revision bigint NOT NULL,plan jsonb NOT NULL,
+ expires_at timestamptz NOT NULL DEFAULT now()+interval '20 minutes',created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS opc_import_preview_owner ON opc_import_previews(workspace_id,created_at);
+ALTER TABLE opc_import_previews ENABLE ROW LEVEL SECURITY;
+ALTER TABLE opc_import_previews FORCE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS opc_import_preview_owner ON opc_import_previews;
+CREATE POLICY opc_import_preview_owner ON opc_import_previews
+ USING(EXISTS(SELECT 1 FROM opc_workspaces w WHERE w.id=workspace_id AND w.owner_subject=current_setting('app.user_sub',true)))
+ WITH CHECK(EXISTS(SELECT 1 FROM opc_workspaces w WHERE w.id=workspace_id AND w.owner_subject=current_setting('app.user_sub',true)));
+
 COMMIT;

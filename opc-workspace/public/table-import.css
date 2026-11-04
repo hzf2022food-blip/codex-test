@@ -1,0 +1,10 @@
+
+.table-import-dialog{width:calc(100% - 32px);max-width:980px;max-height:calc(100dvh - 32px);overflow:auto;box-sizing:border-box;padding:24px;border:1px solid #dbe5df;border-radius:16px;color:#173436;background:#fff;font:14px/1.65 system-ui}
+.table-import-dialog::backdrop{background:#17343688}.table-import-dialog h2{margin:0;font-size:23px}.table-import-dialog h3{font-size:17px;margin:20px 0 12px}
+.ti-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.ti-head p,.ti-help{font-size:12px;color:#657b70}.ti-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}.table-import-dialog label{display:block;font-weight:500}
+.table-import-dialog input,.table-import-dialog select{display:block;box-sizing:border-box;width:100%;min-height:44px;margin:5px 0;padding:9px;border:1px solid #c5d7cb;border-radius:7px;background:white;font:14px system-ui;color:#173436}
+.ti-file{padding:16px;border:1px dashed #bed3c4;border-radius:10px;margin:16px 0}.ti-file a{display:inline-flex;margin-top:8px}.ti-scroll{overflow:auto;max-height:230px}.ti-scroll table{border-collapse:collapse;font-size:12px;white-space:nowrap}.ti-scroll td,.ti-scroll th{padding:8px 12px;border:1px solid #dbe5df;max-width:280px;overflow:hidden;text-overflow:ellipsis}
+#ti-message{padding:12px;background:#eef5f0;border-radius:8px}#ti-error{color:#a83f30;white-space:pre-wrap}
+.ti-result-list{display:grid;gap:6px;max-height:320px;overflow:auto}.ti-result-list article{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;border:1px solid #dbe5df;border-radius:8px;padding:10px}.ti-result-list small{grid-column:1/-1;color:#5b7062}.ti-result-list .ti-bad{border-color:#e0a69f;background:#fff8f7}
+.ti-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.ti-actions button{min-height:44px}
+@media(max-width:600px){.table-import-dialog{padding:18px;width:calc(100% - 16px);max-height:calc(100dvh - 16px)}.ti-grid{grid-template-columns:1fr}.table-import-dialog input,.table-import-dialog select{font-size:16px}.ti-actions button{flex:1 1 45%}.ti-result-list article{grid-template-columns:1fr}.ti-result-list small{grid-column:auto}}

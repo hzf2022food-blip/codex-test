@@ -2,7 +2,7 @@
 name: OPC cloud checks
 on:
   push:
-    branches: [main, codex/opc-cloud, codex/opc-mobile]
+    branches: [main, codex/opc-cloud, codex/opc-mobile, codex/opc-table-import]
     paths: ['opc-workspace/**', '.github/workflows/opc-cloud.yml']
   workflow_dispatch:
 permissions:

@@ -7,7 +7,7 @@ let ready=false;
 for(let attempt=0;attempt<12;attempt++){
  try{
   const health=await fetch(new URL('/health',origin),{signal:AbortSignal.timeout(20000),cache:'no-store'});
-  assert.equal(health.status,200);assert.equal((await health.json()).version,'0.4.2');
+  assert.equal(health.status,200);assert.equal((await health.json()).version,'0.5.0');
   const manifest=await fetch(new URL('/manifest.webmanifest',origin),{signal:AbortSignal.timeout(20000),cache:'no-store'});
   assert.equal(manifest.status,200);assert.equal((await manifest.json()).display,'standalone');ready=true;break;
  }catch{console.log('Waiting for mobile deployment, attempt '+(attempt+1));if(attempt<11)await new Promise(resolve=>setTimeout(resolve,10000));}
@@ -26,9 +26,11 @@ try{
  assert(box.x>=0&&box.x+box.width<=390,'Install button must fit inside phone screen');
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;});
  assert.equal((await context.request.get('/api/workspace')).status(),401);
+ assert.equal((await context.request.get('/api/import/schema')).status(),401);
+ const importer=await context.request.get('/table-import.js');assert.equal(importer.status(),200);assert((await importer.text()).includes('openTableImport'));
  assert.deepEqual(errors,[]);
  const png=(await page.screenshot({fullPage:true})).toString('base64'),size=6000,count=Math.ceil(png.length/size);
  for(let i=0;i<count;i++)console.log('OPC_PNG:live-phone-login:'+i+':'+count+':'+png.slice(i*size,(i+1)*size));
- console.log('LIVE_MOBILE_OK: health database ready, v0.4.2 manifest, public phone login, home screen button, worker registration, unauthorized data blocked');
+ console.log('LIVE_MOBILE_OK: health database ready, v0.5.0 manifest, public phone login, home screen button, worker registration, unauthorized data blocked');
  await context.close();
 }finally{await browser.close();}
