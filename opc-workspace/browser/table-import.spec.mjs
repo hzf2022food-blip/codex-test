@@ -17,8 +17,8 @@ test('Excel/CSV import, preview, backup, duplicates, conflicts, references and m
   const before=await (await page.request.get('/api/workspace')).json();expect(before.supply.suppliers.some(r=>r.name===name)).toBe(false);
   const backup=page.waitForEvent('download');await page.getByRole('button',{name:'导出导入前备份'}).click();expect((await backup).suggestedFilename()).toContain('.json');
   await page.getByRole('button',{name:'确认导入到云端'}).click();await expect(page.locator('#table-import-dialog')).not.toBeVisible();
-  await expect(page.getByText(name,{exact:true})).toBeVisible();await page.reload();await expect(page.getByText(name,{exact:true})).toBeVisible();
-  await signIn(mobile);await mobile.goto('/#A01?business=BUS-001');await expect(mobile.getByText(name,{exact:true})).toBeVisible();await expect(mobile.getByText('001234',{exact:true})).toBeVisible();
+  await expect(page.locator('#record-results').getByText(name,{exact:true})).toBeVisible();await page.reload();await expect(page.locator('#record-results').getByText(name,{exact:true})).toBeVisible();
+  await signIn(mobile);await mobile.goto('/#A01?business=BUS-001');await expect(mobile.locator('#record-results').getByText(name,{exact:true})).toBeVisible();await expect(mobile.getByText('001234',{exact:true})).toBeVisible();
   await open(page);await csv(page,content);await preview(page);await expect(page.locator('#ti-message')).toContainText('跳过 1 条');await expect(page.getByRole('button',{name:'确认导入到云端'})).toBeDisabled();
   await csv(page,'公司名称,联系电话\n'+name+',009999');await preview(page);await expect(page.locator('#ti-message')).toContainText('错误 1 条');await expect(page.getByRole('button',{name:'确认导入到云端'})).toBeDisabled();
   const report=page.waitForEvent('download');await page.getByRole('button',{name:'下载错误清单CSV'}).click();expect((await report).suggestedFilename()).toContain('.csv');
