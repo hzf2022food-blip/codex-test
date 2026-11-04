@@ -8,3 +8,8 @@
 .ti-result-list{display:grid;gap:6px;max-height:320px;overflow:auto}.ti-result-list article{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;border:1px solid #dbe5df;border-radius:8px;padding:10px}.ti-result-list small{grid-column:1/-1;color:#5b7062}.ti-result-list .ti-bad{border-color:#e0a69f;background:#fff8f7}
 .ti-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.ti-actions button{min-height:44px}
 @media(max-width:600px){.table-import-dialog{padding:18px;width:calc(100% - 16px);max-height:calc(100dvh - 16px)}.ti-grid{grid-template-columns:1fr}.table-import-dialog input,.table-import-dialog select{font-size:16px}.ti-actions button{flex:1 1 45%}.ti-result-list article{grid-template-columns:1fr}.ti-result-list small{grid-column:auto}}
+
+.table-import-dialog details{margin-top:14px}.table-import-dialog summary{cursor:pointer;padding:10px 0;font-weight:500;color:#157a65}
+.ti-head{position:sticky;top:-24px;padding-top:12px;background:white;z-index:2}
+.ti-actions{position:sticky;bottom:-24px;z-index:2;background:white;border-top:1px solid #dbe5df;padding:12px 0}
+@media(max-width:600px){.ti-head{top:-18px}.ti-actions{bottom:-18px}}

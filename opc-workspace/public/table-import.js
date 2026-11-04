@@ -31,7 +31,10 @@ window.openTableImport=async function(initialKind='suppliers'){
  function lock(value){busy=value;dialog.setAttribute('aria-busy',String(value));dialog.querySelectorAll('input,select,button').forEach(control=>control.disabled=value);
   if(!value){el('ti-sheet').disabled=!current.file;el('ti-preview').disabled=!current.file||!current.headers.length;el('ti-commit').disabled=!current.previewId;}}
  function mappings(){
-  el('ti-mapping').innerHTML='<h3>核对字段对应</h3><p class="ti-help">带*为必填。不需要的列保持“不导入”；每一列只对应一个字段。</p><div class="ti-grid">'+kinds[el('ti-kind').value].fields.map(f=>'<label for="ti-map-'+f[0]+'">'+escape(f[1])+(f[2]?' *':'')+'<select id="ti-map-'+f[0]+'" data-field="'+f[0]+'"><option value="">不导入</option>'+current.headers.map((header,i)=>'<option value="'+i+'" '+(current.mapping[f[0]]===i?'selected':'')+'>'+escape(header)+'（第'+(i+1)+'列）</option>').join('')+'</select></label>').join('')+'</div>';
+  const fields=kinds[el('ti-kind').value].fields;
+  const shown=fields.filter(f=>f[2]||Object.hasOwn(current.mapping,f[0])),other=fields.filter(f=>!f[2]&&!Object.hasOwn(current.mapping,f[0]));
+  const field=f=>'<label for="ti-map-'+f[0]+'">'+escape(f[1])+(f[2]?' *':'')+'<select id="ti-map-'+f[0]+'" data-field="'+f[0]+'"><option value="">不导入</option>'+current.headers.map((header,i)=>'<option value="'+i+'" '+(current.mapping[f[0]]===i?'selected':'')+'>'+escape(header)+'（第'+(i+1)+'列）</option>').join('')+'</select></label>';
+  el('ti-mapping').innerHTML='<h3>核对字段对应</h3><p class="ti-help">带*为必填。已识别字段显示在下方；其他字段可展开选择。每列只对应一个字段。</p><div class="ti-grid">'+shown.map(field).join('')+'</div>'+(other.length?'<details><summary>其他可选字段（'+other.length+'项）</summary><div class="ti-grid">'+other.map(field).join('')+'</div></details>':'');
   dialog.querySelectorAll('[data-field]').forEach(select=>select.onchange=()=>{invalidate();if(select.value==='')delete current.mapping[select.dataset.field];else current.mapping[select.dataset.field]=Number(select.value);});
  }
  async function inspect(){
@@ -40,7 +43,7 @@ window.openTableImport=async function(initialKind='suppliers'){
    const result=await api('/api/import/inspect',body());current.headers=result.headers;current.mapping=result.mapping;
    el('ti-sheet').innerHTML=result.sheets.map((name,i)=>'<option value="'+i+'" '+(i===result.sheet?'selected':'')+'>'+escape(name)+'</option>').join('');
    mappings();el('ti-message').textContent='已读取 '+current.filename+'，共 '+result.total+' 条记录。请核对字段后点击预览。';
-   el('ti-samples').innerHTML='<h3>原表前3条</h3><div class="ti-scroll"><table><thead><tr><th>表格行</th>'+result.headers.map(h=>'<th>'+escape(h)+'</th>').join('')+'</tr></thead><tbody>'+result.samples.map(r=>'<tr><td>'+r.number+'</td>'+result.headers.map((_,i)=>'<td>'+escape(r.cells[i])+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+   el('ti-samples').innerHTML='<details><summary>查看原表前3条</summary><div class="ti-scroll"><table><thead><tr><th>表格行</th>'+result.headers.map(h=>'<th>'+escape(h)+'</th>').join('')+'</tr></thead><tbody>'+result.samples.map(r=>'<tr><td>'+r.number+'</td>'+result.headers.map((_,i)=>'<td>'+escape(r.cells[i])+'</td>').join('')+'</tr>').join('')+'</tbody></table></div></details>';
   }catch(e){current.headers=[];el('ti-mapping').innerHTML='';el('ti-samples').innerHTML='';error(e.message);el('ti-message').textContent='表格尚未读取成功。';}finally{lock(false);}
  }
  el('ti-close').onclick=()=>{if(!busy)dialog.close();};
